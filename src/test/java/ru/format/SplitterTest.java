@@ -9,7 +9,31 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class SplitterTest {
 
     @Test
-    void splitFileInTokens() {
+    void splitShortFileInTokens() {
+        List<Token> tokenListReceived = Splitter.splitFileInTokens("if (blabla == null) \n" +
+                "{\n" +
+                "return 1;\n" +
+                "  if (...) \n" +
+                "  {\n" +
+                "  if (...) { }\n" +
+                "}} ");
+        List<Token> tokenList = new ArrayList<>();
+        tokenList.add(new Token("if (blabla == null)", 0));
+        tokenList.add(new Token(TokenType.OPEN, 0));
+        tokenList.add(new Token("return 1;", 1));
+        tokenList.add(new Token("if (...)", 1));
+        tokenList.add(new Token(TokenType.OPEN, 1));
+        tokenList.add(new Token("if (...)", 2));
+        tokenList.add(new Token(TokenType.OPEN, 2));
+        tokenList.add(new Token(TokenType.CLOSE, 2));
+        tokenList.add(new Token(TokenType.CLOSE, 1));
+        tokenList.add(new Token(TokenType.CLOSE, 0));
+
+        assertEquals(tokenList.toString(), tokenListReceived.toString());
+    }
+
+    @Test
+    void splitLongFileInTokens() {
         List<Token> tokenListReceived = Splitter.splitFileInTokens("if (boo == null){ return 1;}\n" +
                 "else if (boo == 1)   {      return 2; }    \n" +
                 "   else \n" +
