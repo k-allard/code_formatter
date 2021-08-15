@@ -1,5 +1,6 @@
 package ru.format;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,9 +9,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SplitterTest {
 
+    private static Splitter splitter;
+
+    @BeforeAll
+    static void init() {
+        splitter = new Splitter();
+    }
+
     @Test
     void splitShortFileInTokens() {
-        List<Token> tokenListReceived = Splitter.splitFileInTokens("if (blabla == null) \n" +
+        List<Token> tokenListReceived = splitter.splitFileInTokens("if (blabla == null) \n" +
                 "{\n" +
                 "return 1;\n" +
                 "  if (...) \n" +
@@ -34,7 +42,7 @@ class SplitterTest {
 
     @Test
     void splitLongFileInTokens() {
-        List<Token> tokenListReceived = Splitter.splitFileInTokens("if (boo == null){ return 1;}\n" +
+        List<Token> tokenListReceived = splitter.splitFileInTokens("if (boo == null){ return 1;}\n" +
                 "else if (boo == 1)   {      return 2; }    \n" +
                 "   else \n" +
                 "{ if (boo > 10) \n" +

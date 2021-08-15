@@ -1,5 +1,6 @@
 package ru.format;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,19 +8,26 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class OutputterTest {
 
+    private static Outputter outputter;
+
+    @BeforeAll
+    static void init() {
+        outputter = new Outputter();
+    }
+
     @Test
     void addSpacesZeroLevel() {
-        assertEquals("", Outputter.addSpaces(0));
+        assertEquals("", outputter.addSpaces(0));
     }
 
     @Test
     void addSpacesFirstLevel() {
-        assertEquals("    ", Outputter.addSpaces(1));
+        assertEquals("    ", outputter.addSpaces(1));
     }
 
     @Test
     void addSpacesFifthLevel() {
-        assertEquals("                    ", Outputter.addSpaces(5));
+        assertEquals("                    ", outputter.addSpaces(5));
     }
 
     @Test
@@ -45,6 +53,6 @@ class OutputterTest {
                 "    return loginDtoResponse;\n" +
                 "}\n" ,
 
-                Outputter.getOutput(tokenList));
+                outputter.getOutput(tokenList));
     }
 }

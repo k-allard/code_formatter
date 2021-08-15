@@ -13,7 +13,7 @@ public class Token {
 
     public Token(String value, int level) {
         this.value = value;
-        this.tokenType = TokenType.OTHER;
+        this.tokenType = TokenType.TEXT;
         this.level = level;
     }
 

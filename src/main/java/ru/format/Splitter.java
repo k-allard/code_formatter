@@ -5,14 +5,14 @@ import java.util.List;
 
 public class Splitter {
 
-    public static List<Token> trimWhitespaces(List<Token> tokenList) {
+    List<Token> trimWhitespaces(List<Token> tokenList) {
         for (Token token : tokenList) {
             token.value = token.value.trim();
         }
         return tokenList;
     }
 
-    public static void fixLevels(List<Token> tokenList) {
+    void fixLevels(List<Token> tokenList) {
         int reduceFlag = 0;
         for (Token token : tokenList) {
             if (token.tokenType == TokenType.CLOSE) {
@@ -25,10 +25,10 @@ public class Splitter {
         }
     }
 
-    public static List<Token> deleteEmptyTokens(List<Token> tokenList) {
+    List<Token> deleteEmptyTokens(List<Token> tokenList) {
         List<Token> newTokenList = new ArrayList<>();
         for (Token token : tokenList) {
-            if (token.tokenType == TokenType.OTHER && token.value.length() == 0) {
+            if (token.tokenType == TokenType.TEXT && token.value.length() == 0) {
                 continue;
             }
             newTokenList.add(token);
@@ -36,7 +36,7 @@ public class Splitter {
         return newTokenList;
     }
 
-    public static List<Token> splitByOpenBrackets(String fileString) {
+    List<Token> splitByOpenBrackets(String fileString) {
         List<Token> tokenList = new ArrayList<>();
         String[] stringArray = fileString.split("[{]");
         if (stringArray.length == 1) {
@@ -53,10 +53,10 @@ public class Splitter {
         return tokenList;
     }
 
-    public static List<Token> splitByNewLines(List<Token> tokenList) {
+    List<Token> splitByNewLines(List<Token> tokenList) {
         List<Token> newTokenList = new ArrayList<>();
         for (Token token : tokenList) {
-            if (token.tokenType == TokenType.OTHER) {
+            if (token.tokenType == TokenType.TEXT) {
                 String[] newValues = token.value.split("[\n]");
                 if (newValues.length > 1) {
                     for (String newValue : newValues) {
@@ -72,10 +72,10 @@ public class Splitter {
         return trimWhitespaces(newTokenList);
     }
 
-    public static List<Token> splitByCloseBrackets(List<Token> tokenList) {
+    List<Token> splitByCloseBrackets(List<Token> tokenList) {
         List<Token> newTokenList = new ArrayList<>();
         for (Token token : tokenList) {
-            if (token.tokenType != TokenType.OTHER) {
+            if (token.tokenType != TokenType.TEXT) {
                 newTokenList.add(token);
                 continue;
             }
@@ -93,7 +93,7 @@ public class Splitter {
         return trimWhitespaces(newTokenList);
     }
 
-    public static List<Token> splitFileInTokens(String stringFile) {
+    List<Token> splitFileInTokens(String stringFile) {
         List<Token> tokens = splitByOpenBrackets(stringFile + " ");
         tokens = splitByCloseBrackets(tokens);
         tokens = splitByNewLines(tokens);

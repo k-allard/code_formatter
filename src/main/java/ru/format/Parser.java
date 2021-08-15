@@ -7,12 +7,12 @@ import java.util.stream.Collectors;
 
 public class Parser {
 
-    public static String readAllLinesWithStream(BufferedReader reader) {
+    String readAllLinesWithStream(BufferedReader reader) {
         return reader.lines()
                 .collect(Collectors.joining(System.lineSeparator()));
     }
 
-    static String parseJavaFile(String fileName) throws IOException {
+    String parseJavaFile(String fileName) throws IOException {
         String allFileInOneString;
         try (
                 FileReader fileReader = new FileReader(fileName);
@@ -21,6 +21,5 @@ public class Parser {
             allFileInOneString = readAllLinesWithStream(br);
             return allFileInOneString;
         }
-
     }
 }
