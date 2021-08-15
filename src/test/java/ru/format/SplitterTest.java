@@ -1,4 +1,44 @@
-import static org.junit.jupiter.api.Assertions.*;
+package ru.format;
+
+import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class SplitterTest {
-  
+
+    @Test
+    void splitFileInTokens() {
+        List<Token> tokenListReceived = Splitter.splitFileInTokens("if (boo == null){ return 1;}\n" +
+                "else if (boo == 1)   {      return 2; }    \n" +
+                "   else \n" +
+                "{ if (boo > 10) \n" +
+                "   {\n" +
+                "boo -= 1;    \n" +
+                "return boo;\n" +
+                " }  \n" +
+                "      return 4;\n" +
+                "} ");
+        List<Token> tokenList = new ArrayList<>();
+        tokenList.add(new Token("if (boo == null)", 0));
+        tokenList.add(new Token(TokenType.OPEN, 0));
+        tokenList.add(new Token("return 1;", 1));
+        tokenList.add(new Token(TokenType.CLOSE, 0));
+        tokenList.add(new Token("else if (boo == 1)", 0));
+        tokenList.add(new Token(TokenType.OPEN, 0));
+        tokenList.add(new Token("return 2;", 1));
+        tokenList.add(new Token(TokenType.CLOSE, 0));
+        tokenList.add(new Token("else", 0));
+        tokenList.add(new Token(TokenType.OPEN, 0));
+        tokenList.add(new Token("if (boo > 10)", 1));
+        tokenList.add(new Token(TokenType.OPEN, 1));
+        tokenList.add(new Token("boo -= 1;", 2));
+        tokenList.add(new Token("return boo;", 2));
+        tokenList.add(new Token(TokenType.CLOSE, 1));
+        tokenList.add(new Token("return 4;", 1));
+        tokenList.add(new Token(TokenType.CLOSE, 0));
+
+        assertEquals(tokenList.toString(), tokenListReceived.toString());
+    }
 }

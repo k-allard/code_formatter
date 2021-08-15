@@ -1,24 +1,28 @@
 package ru.format;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Token {
-    public List<String> codeStringList = new ArrayList<String>();
-    private int level = 0;
+    public String value;
+    public TokenType tokenType;
+    public int level;
 
-    public Token(String token) {
-        this.codeStringList.add(token);
+    public Token(TokenType tokenType, int level) {
+        this.value = "";
+        this.tokenType = tokenType;
+        this.level = level;
     }
 
-    public void increaseLevel() {
-        level++;
+    public Token(String value, int level) {
+        this.value = value;
+        this.tokenType = TokenType.OTHER;
+        this.level = level;
     }
 
     @Override
     public String toString() {
-        return codeStringList.toString();
+        if (tokenType == TokenType.OPEN)
+            return "{";
+        if (tokenType == TokenType.CLOSE)
+            return "}";
+        return value;
     }
-
-
 }
