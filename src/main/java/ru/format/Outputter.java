@@ -12,8 +12,8 @@ public class Outputter {
             sb.append(" ".repeat(Math.max(0, tokenList.get(i).level * SPACES_FOR_LEVEL)));
             if (tokenList.get(i).tokenType == TokenType.OTHER) {
                 sb.append(tokenList.get(i).value);
-                if (tokenList.get(i + 1).tokenType == TokenType.OTHER
-                        || tokenList.get(i + 1).tokenType == TokenType.CLOSE) {
+                if (i + 1 < tokenList.size() && (tokenList.get(i + 1).tokenType == TokenType.OTHER
+                        || tokenList.get(i + 1).tokenType == TokenType.CLOSE)) {
                     sb.append("\n");
                 }
             } else if (tokenList.get(i).tokenType == TokenType.OPEN) {
