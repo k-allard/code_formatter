@@ -12,7 +12,7 @@ public class Splitter {
         return tokenList;
     }
 
-    public static List<Token> fixLevels(List<Token> tokenList) {
+    public static void fixLevels(List<Token> tokenList) {
         int reduceFlag = 0;
         for (Token token : tokenList) {
             if (token.tokenType == TokenType.CLOSE)
@@ -21,7 +21,6 @@ public class Splitter {
             if (token.tokenType == TokenType.OPEN)
                 token.level = 0;
         }
-        return tokenList;
     }
 
     public static List<Token> deleteEmptyTokens(List<Token> tokenList) {
@@ -68,7 +67,7 @@ public class Splitter {
                 newTokenList.add(token);
             }
         }
-        return newTokenList;
+        return trimWhitespaces(newTokenList);
     }
 
 
@@ -90,15 +89,13 @@ public class Splitter {
                 newTokenList.add(token);
             }
         }
-        return newTokenList;
+        return trimWhitespaces(newTokenList);
     }
 
     public static List<Token> splitFileInTokens(String stringFile) {
         List<Token> tokens = splitByOpenBrackets(stringFile + " ");
         tokens = splitByCloseBrackets(tokens);
-        trimWhitespaces(tokens);
         tokens = splitByNewLines(tokens);
-        trimWhitespaces(tokens);
         tokens = deleteEmptyTokens(tokens);
         fixLevels(tokens);
         return tokens;
