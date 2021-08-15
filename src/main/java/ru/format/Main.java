@@ -10,6 +10,6 @@ public class Main {
         }
         System.err.println("Hi! This is code formatter");
         System.err.println("R E S U L T :\n");
-        Outputter.printOutput(Splitter.splitFileInTokens(Parser.parseJavaFile(args[0])));
+        System.out.println(Outputter.getOutput(Splitter.splitFileInTokens(Parser.parseJavaFile(args[0]))));
     }
 }

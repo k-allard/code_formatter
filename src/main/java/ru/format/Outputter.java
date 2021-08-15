@@ -6,6 +6,7 @@ public class Outputter {
 
     private static final int SPACES_FOR_LEVEL = 4;
 
+
     public static String addSpaces(int level) {
         return(" ".repeat(Math.max(0, level * SPACES_FOR_LEVEL)));
     }
@@ -27,9 +28,5 @@ public class Outputter {
             }
         }
         return sb.toString();
-    }
-
-    public static void printOutput(List<Token> tokenList) {
-        System.out.print(getOutput(tokenList));
     }
 }
