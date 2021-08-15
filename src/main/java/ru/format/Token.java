@@ -19,10 +19,12 @@ public class Token {
 
     @Override
     public String toString() {
-        if (tokenType == TokenType.OPEN)
+        if (tokenType == TokenType.OPEN) {
             return "{";
-        if (tokenType == TokenType.CLOSE)
+        }
+        if (tokenType == TokenType.CLOSE) {
             return "}";
+        }
         return value;
     }
 }

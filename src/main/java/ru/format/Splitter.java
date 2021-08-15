@@ -15,11 +15,13 @@ public class Splitter {
     public static void fixLevels(List<Token> tokenList) {
         int reduceFlag = 0;
         for (Token token : tokenList) {
-            if (token.tokenType == TokenType.CLOSE)
+            if (token.tokenType == TokenType.CLOSE) {
                 reduceFlag++;
+            }
             token.level -= reduceFlag;
-            if (token.tokenType == TokenType.OPEN)
+            if (token.tokenType == TokenType.OPEN) {
                 token.level = 0;
+            }
         }
     }
 
@@ -69,7 +71,6 @@ public class Splitter {
         }
         return trimWhitespaces(newTokenList);
     }
-
 
     public static List<Token> splitByCloseBrackets(List<Token> tokenList) {
         List<Token> newTokenList = new ArrayList<>();
