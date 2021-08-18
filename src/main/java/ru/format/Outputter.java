@@ -7,7 +7,7 @@ public class Outputter {
     private static final int SPACES_FOR_LEVEL = 4;
 
     String addSpaces(int level) {
-        return(" ".repeat(Math.max(0, level * SPACES_FOR_LEVEL)));
+        return (" ".repeat(Math.max(0, level * SPACES_FOR_LEVEL)));
     }
 
     String getOutput(List<Token> tokenList) {

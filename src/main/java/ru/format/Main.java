@@ -1,19 +1,34 @@
 package ru.format;
 
-import java.io.IOException;
+import ru.format.exceptions.ReaderException;
+import ru.format.exceptions.WriterException;
+import ru.format.parser.FileReaderMy;
+import ru.format.parser.FileWriterMy;
+import ru.format.parser.IReader;
+import ru.format.parser.IWriter;
 
 public class Main {
+    private static final String outputFile = "code_output.txt";
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
+
         if (args.length != 1) {
             throw new IllegalArgumentException("Pass the filename as parameter!");
         }
-        System.err.println("Hi! This is code formatter");
+        System.out.println("Hi! This is code formatter");
+        System.out.println("Your input file is: " + args[0]);
 
-        Parser parser = new Parser();
-        Splitter splitter = new Splitter();
-        Outputter outputter = new Outputter();
-        System.err.println("R E S U L T :\n");
-        System.out.print(outputter.getOutput(splitter.splitFileInTokens(parser.parseJavaFile(args[0]))));
+        Formatter formatter = new Formatter();
+
+        try (
+                IReader in = new FileReaderMy(args[0]);
+                IWriter out = new FileWriterMy(outputFile)
+        ) {
+            formatter.format(in, out);
+        } catch (WriterException | ReaderException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Success.");
+        System.out.println("Result can be found in " + outputFile);
     }
 }
