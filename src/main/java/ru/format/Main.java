@@ -5,13 +5,11 @@ import ru.format.exceptions.WriterException;
 import ru.format.formater.Formatter;
 import ru.format.parser.FileReaderMy;
 import ru.format.parser.FileWriterMy;
-import ru.format.parser.IReader;
-import ru.format.parser.IWriter;
 
 public class Main {
     private static final String outputFile = "code_output.txt";
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 
         if (args.length != 1) {
             throw new IllegalArgumentException("Pass the filename as parameter!");
