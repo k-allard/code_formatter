@@ -1,4 +1,4 @@
-package ru.format;
+package ru.format.formater;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,7 +93,7 @@ public class Splitter {
         return trimWhitespaces(newTokenList);
     }
 
-    List<Token> splitFileInTokens(String stringFile) {
+    public List<Token> splitFileInTokens(String stringFile) {
         List<Token> tokens = splitByOpenBrackets(stringFile + " ");
         tokens = splitByCloseBrackets(tokens);
         tokens = splitByNewLines(tokens);

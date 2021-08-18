@@ -1,4 +1,4 @@
-package ru.format;
+package ru.format.formater;
 
 public class Token {
     public String value;

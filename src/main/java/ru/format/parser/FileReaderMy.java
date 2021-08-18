@@ -1,7 +1,10 @@
 package ru.format.parser;
 
-import java.io.*;
-
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import ru.format.exceptions.ReaderException;
 
 public class FileReaderMy implements IReader, IClosable {

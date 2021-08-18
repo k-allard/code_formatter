@@ -2,6 +2,7 @@ package ru.format;
 
 import ru.format.exceptions.ReaderException;
 import ru.format.exceptions.WriterException;
+import ru.format.formater.Formatter;
 import ru.format.parser.FileReaderMy;
 import ru.format.parser.FileWriterMy;
 import ru.format.parser.IReader;

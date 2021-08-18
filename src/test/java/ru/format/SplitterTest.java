@@ -2,6 +2,10 @@ package ru.format;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import ru.format.formater.Splitter;
+import ru.format.formater.Token;
+import ru.format.formater.TokenType;
+
 import java.util.ArrayList;
 import java.util.List;
 

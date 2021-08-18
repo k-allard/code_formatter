@@ -1,4 +1,4 @@
-package ru.format;
+package ru.format.formater;
 
 import java.util.List;
 
@@ -6,11 +6,11 @@ public class Outputter {
 
     private static final int SPACES_FOR_LEVEL = 4;
 
-    String addSpaces(int level) {
+    public String addSpaces(int level) {
         return (" ".repeat(Math.max(0, level * SPACES_FOR_LEVEL)));
     }
 
-    String getOutput(List<Token> tokenList) {
+    public String getOutput(List<Token> tokenList) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < tokenList.size(); i++) {
             sb.append(addSpaces(tokenList.get(i).level));
