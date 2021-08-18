@@ -11,9 +11,9 @@ public class Formatter implements IFormatter {
     @Override
     public void format(IReader reader, IWriter writer) throws FormatterException, WriterException, ReaderException {
         StringBuilder content = new StringBuilder();
-
+        char ch;
         while (reader.hasChars()) {
-            content.append(reader.readChar());
+            content.append(ch = reader.readChar());
         }
 
         Splitter splitter = new Splitter();
