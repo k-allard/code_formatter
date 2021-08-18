@@ -2,7 +2,7 @@ package ru.format.parser;
 
 import ru.format.exceptions.ReaderException;
 
-public interface IReader extends AutoCloseable {
+public interface IReader {
 
     boolean hasChars() throws ReaderException;
 

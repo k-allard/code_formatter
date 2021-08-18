@@ -22,8 +22,8 @@ public class Main {
         Formatter formatter = new Formatter();
 
         try (
-                IReader in = new FileReaderMy(args[0]);
-                IWriter out = new FileWriterMy(outputFile)
+                var in = new FileReaderMy(args[0]);
+                var out = new FileWriterMy(outputFile)
         ) {
             formatter.format(in, out);
         } catch (WriterException | ReaderException e) {

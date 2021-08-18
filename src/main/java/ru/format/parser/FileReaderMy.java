@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import ru.format.exceptions.ReaderException;
 
-public class FileReaderMy implements IReader, IClosable {
+public class FileReaderMy implements IClosable, IReader {
 
     private final FileInputStream inputStream;
     private final Reader reader;

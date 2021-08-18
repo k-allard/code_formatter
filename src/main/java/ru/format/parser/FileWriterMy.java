@@ -25,10 +25,6 @@ public class FileWriterMy implements IClosable, IWriter {
 
     @Override
     public void close() {
-//        try {
         outFile.close();
-//        }
-//        catch (IOException e) {
-//            throw new WriterException("Writer exception");
-        }
+    }
 }
