@@ -12,18 +12,16 @@ public class Outputter {
 
     public String getOutput(List<Token> tokenList) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < tokenList.size(); i++) {
-            sb.append(addSpaces(tokenList.get(i).level));
-            if (tokenList.get(i).tokenType == TokenType.TEXT) {
-                sb.append(tokenList.get(i).value);
-                if (i + 1 < tokenList.size() && (tokenList.get(i + 1).tokenType == TokenType.TEXT
-                        || tokenList.get(i + 1).tokenType == TokenType.CLOSE)) {
-                    sb.append("\n");
-                }
-            } else if (tokenList.get(i).tokenType == TokenType.OPEN) {
+        for (Token token : tokenList) {
+            sb.append(addSpaces(token.level));
+            if (token.tokenType == TokenType.TEXT) {
+                sb.append(token.value);
+            } else if (token.tokenType == TokenType.OPEN) {
                 sb.append(" {\n");
-            } else if (tokenList.get(i).tokenType == TokenType.CLOSE) {
+            } else if (token.tokenType == TokenType.CLOSE) {
                 sb.append("}\n");
+            } else if (token.tokenType == TokenType.SEMICOLON) {
+                sb.append(";\n");
             }
         }
         return sb.toString();

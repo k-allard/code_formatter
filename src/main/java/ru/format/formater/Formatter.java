@@ -12,7 +12,13 @@ public class Formatter implements IFormatter {
 
     List<Token> trimWhitespaces(List<Token> tokenList) {
         for (Token token : tokenList) {
+            if (token.value.contains("\n")) {
+                token.value = token.value.replace("\n", "");
+            }
             token.value = token.value.trim();
+            if (token.value.contains("  ")) {
+                token.value = token.value.replaceAll(" +", " ");
+            }
         }
         return tokenList;
     }
@@ -24,7 +30,7 @@ public class Formatter implements IFormatter {
                 reduceFlag++;
             }
             token.level -= reduceFlag;
-            if (token.tokenType == TokenType.OPEN) {
+            if (token.tokenType == TokenType.OPEN || token.tokenType == TokenType.SEMICOLON) {
                 token.level = 0;
             }
         }
@@ -61,11 +67,12 @@ public class Formatter implements IFormatter {
                     content.setLength(0);
                 }
                 tokenList.add(new Token(TokenType.CLOSE, levelCounter));
-            } else if (ch == '\n') {
+            } else if (ch == ';') {
                 if (content.length() != 0) {
                     tokenList.add(new Token(content.toString(), levelCounter));
                     content.setLength(0);
                 }
+                tokenList.add(new Token(TokenType.SEMICOLON, levelCounter));
             } else {
                 content.append(ch);
             }

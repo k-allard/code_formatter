@@ -43,4 +43,58 @@ class FormatterTest {
 
                 , out.toString());
     }
+
+    @Test
+    void formatTest2() throws WriterException, ReaderException {
+        var in = new StringReader("    function { if (blabla == null) { return 1;\n" +
+                "    } if\n" +
+                " (...) { if (...) {\n" +
+                "    }\n" +
+                "        }\n" +
+                "    }");
+        var out = new StringWriter();
+        Formatter formatter = new Formatter();
+        formatter.format(in, out);
+
+        assertEquals("function {\n" +
+                        "    if (blabla == null) {\n" +
+                        "        return 1;\n" +
+                        "    }\n" +
+                        "    if (...) {\n" +
+                        "        if (...) {\n" +
+                        "        }\n" +
+                        "    }\n" +
+                        "}\n"
+                , out.toString());
+    }
+
+    @Test
+    void formatTest3() throws WriterException, ReaderException {
+        var in = new StringReader("public UserLoginResponse loginUser(UserLoginRequest request) throws BadRequestException\n" +
+                "{\n" +
+                "User user = userService.getUserByEmail(request.getEmail());\n" +
+                "if (user == null)\n" +
+                "{        throw new BadRequestException(ErrorCode.INCORRECT_LOGIN, \"login\"); }\n" +
+                "String token = tokenService.getToken(user);\n" +
+                "response.addHeader(SET_AUTH_HEADER_STRING, token);\n" +
+                "\n" +
+                "\n" +
+                "UserLoginResponse loginDtoResponse = new UserLoginResponse(token);\n" +
+                "return loginDtoResponse;      }");
+        var out = new StringWriter();
+        Formatter formatter = new Formatter();
+        formatter.format(in, out);
+
+        assertEquals("public UserLoginResponse loginUser(UserLoginRequest request) throws BadRequestException {\n" +
+                        "    User user = userService.getUserByEmail(request.getEmail());\n" +
+                        "    if (user == null) {\n" +
+                        "        throw new BadRequestException(ErrorCode.INCORRECT_LOGIN, \"login\");\n" +
+                        "    }\n" +
+                        "    String token = tokenService.getToken(user);\n" +
+                        "    response.addHeader(SET_AUTH_HEADER_STRING, token);\n" +
+                        "    UserLoginResponse loginDtoResponse = new UserLoginResponse(token);\n" +
+                        "    return loginDtoResponse;\n" +
+                        "}\n"
+                , out.toString());
+    }
 }
