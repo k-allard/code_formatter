@@ -21,7 +21,7 @@ public class Outputter {
         }
     }
 
-    public void writeOutput(List<Lexeme> lexemeList) throws WriterException {
+    public void output(List<Lexeme> lexemeList) throws WriterException {
         for (Lexeme lexeme : lexemeList) {
             writeSpaces(lexeme.level);
             if (lexeme.lexemeType == LexemeType.TEXT) {

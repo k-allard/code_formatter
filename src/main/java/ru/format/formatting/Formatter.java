@@ -14,6 +14,6 @@ public class Formatter implements IFormatter {
         Lexer lexer = new Lexer(reader);
         List<Lexeme> lexemeList = lexer.getLexemes();
         Outputter outputter = new Outputter(writer);
-        outputter.writeOutput(lexemeList);
+        outputter.output(lexemeList);
     }
 }

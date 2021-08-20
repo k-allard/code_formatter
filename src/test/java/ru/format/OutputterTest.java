@@ -54,7 +54,7 @@ class OutputterTest {
         lexemeList.add(new Lexeme("return loginDtoResponse", 1));
         lexemeList.add(new Lexeme(LexemeType.SEMICOLON, 0));
         lexemeList.add(new Lexeme(LexemeType.CLOSE, 0));
-        outputter.writeOutput(lexemeList);
+        outputter.output(lexemeList);
         assertEquals(
             "public Response login(Request request) throws BadException {\n" +
             "    User user = userService.get();\n" +
