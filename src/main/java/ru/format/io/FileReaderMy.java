@@ -1,13 +1,14 @@
-package ru.format.parser;
+package ru.format.io;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import ru.format.exceptions.CloseException;
 import ru.format.exceptions.ReaderException;
 
-public class FileReaderMy implements IClosable, IReader {
+public class FileReaderMy implements IReader {
 
     private final FileInputStream inputStream;
     private final Reader reader;
@@ -33,11 +34,11 @@ public class FileReaderMy implements IClosable, IReader {
     }
 
     @Override
-    public void close() throws ReaderException {
+    public void close() throws CloseException {
         try {
             inputStream.close();
         } catch (IOException e) {
-            throw new ReaderException("Reader inputStream.close() exception");
+            throw new CloseException("Reader inputStream.close() exception");
         }
     }
 

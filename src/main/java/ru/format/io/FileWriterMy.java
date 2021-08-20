@@ -1,11 +1,11 @@
-package ru.format.parser;
+package ru.format.io;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import ru.format.exceptions.WriterException;
 
-public class FileWriterMy implements IClosable, IWriter {
+public class FileWriterMy implements IWriter {
 
     private final PrintWriter outFile;
 
