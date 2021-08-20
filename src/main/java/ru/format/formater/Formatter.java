@@ -1,15 +1,45 @@
 package ru.format.formater;
 
+import java.util.ArrayList;
+import java.util.List;
 import ru.format.exceptions.FormatterException;
 import ru.format.exceptions.ReaderException;
 import ru.format.exceptions.WriterException;
 import ru.format.parser.IReader;
 import ru.format.parser.IWriter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Formatter implements IFormatter {
+
+    List<Token> trimWhitespaces(List<Token> tokenList) {
+        for (Token token : tokenList) {
+            token.value = token.value.trim();
+        }
+        return tokenList;
+    }
+
+    void fixLevels(List<Token> tokenList) {
+        int reduceFlag = 0;
+        for (Token token : tokenList) {
+            if (token.tokenType == TokenType.CLOSE) {
+                reduceFlag++;
+            }
+            token.level -= reduceFlag;
+            if (token.tokenType == TokenType.OPEN) {
+                token.level = 0;
+            }
+        }
+    }
+
+    List<Token> deleteEmptyTokens(List<Token> tokenList) {
+        List<Token> newTokenList = new ArrayList<>();
+        for (Token token : tokenList) {
+            if (token.tokenType == TokenType.TEXT && token.value.length() == 0) {
+                continue;
+            }
+            newTokenList.add(token);
+        }
+        return newTokenList;
+    }
 
     @Override
     public void format(IReader reader, IWriter writer) throws FormatterException, WriterException, ReaderException {
@@ -26,15 +56,26 @@ public class Formatter implements IFormatter {
                 }
                 tokenList.add(new Token(TokenType.OPEN, levelCounter++));
             } else if (ch == '}') {
-                tokenList.add(new Token(TokenType.CLOSE, levelCounter--));
+                if (content.length() != 0) {
+                    tokenList.add(new Token(content.toString(), levelCounter));
+                    content.setLength(0);
+                }
+                tokenList.add(new Token(TokenType.CLOSE, levelCounter));
             } else if (ch == '\n') {
-                tokenList.add(new Token(TokenType.TEXT, levelCounter));
+                if (content.length() != 0) {
+                    tokenList.add(new Token(content.toString(), levelCounter));
+                    content.setLength(0);
+                }
+            } else {
+                content.append(ch);
             }
-            content.append(ch);
         }
 
-        Splitter splitter = new Splitter();
-//        List<Token> tokenList = splitter.splitFileInTokens(content.toString());
+        tokenList = deleteEmptyTokens(trimWhitespaces(tokenList));
+        fixLevels(tokenList);
+
+        // Splitter splitter = new Splitter();
+        // List<Token> tokenList = splitter.splitFileInTokens(content.toString());
 
         Outputter outputter = new Outputter();
         String result = outputter.getOutput(tokenList);
