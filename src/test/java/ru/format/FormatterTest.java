@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Test;
 import ru.format.exceptions.ReaderException;
 import ru.format.exceptions.WriterException;
 import ru.format.formater.Formatter;
-import ru.format.parser.StringReader;
-import ru.format.parser.StringWriter;
+import ru.format.io.StringReader;
+import ru.format.io.StringWriter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

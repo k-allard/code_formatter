@@ -3,10 +3,10 @@ package ru.format;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ru.format.exceptions.WriterException;
+import ru.format.formater.Lexeme;
 import ru.format.formater.Outputter;
-import ru.format.formater.Token;
-import ru.format.formater.TokenType;
-import ru.format.parser.StringWriter;
+import ru.format.formater.LexemeType;
+import ru.format.io.StringWriter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,20 +41,20 @@ class OutputterTest {
     @Test
     void getOutput() throws WriterException {
 
-        List<Token> tokenList = new ArrayList<>();
-        tokenList.add(new Token("public Response login(Request request) throws BadException", 0));
-        tokenList.add(new Token(TokenType.OPEN, 0));
-        tokenList.add(new Token("User user = userService.get()", 1));
-        tokenList.add(new Token(TokenType.SEMICOLON, 0));
-        tokenList.add(new Token("if (user == null)", 1));
-        tokenList.add(new Token(TokenType.OPEN, 0));
-        tokenList.add(new Token("throw new BadRequestException(ErrorCode.INCORRECT_LOGIN, login)", 2));
-        tokenList.add(new Token(TokenType.SEMICOLON, 0));
-        tokenList.add(new Token(TokenType.CLOSE, 1));
-        tokenList.add(new Token("return loginDtoResponse", 1));
-        tokenList.add(new Token(TokenType.SEMICOLON, 0));
-        tokenList.add(new Token(TokenType.CLOSE, 0));
-        outputter.writeOutput(tokenList);
+        List<Lexeme> lexemeList = new ArrayList<>();
+        lexemeList.add(new Lexeme("public Response login(Request request) throws BadException", 0));
+        lexemeList.add(new Lexeme(LexemeType.OPEN, 0));
+        lexemeList.add(new Lexeme("User user = userService.get()", 1));
+        lexemeList.add(new Lexeme(LexemeType.SEMICOLON, 0));
+        lexemeList.add(new Lexeme("if (user == null)", 1));
+        lexemeList.add(new Lexeme(LexemeType.OPEN, 0));
+        lexemeList.add(new Lexeme("throw new BadRequestException(ErrorCode.INCORRECT_LOGIN, login)", 2));
+        lexemeList.add(new Lexeme(LexemeType.SEMICOLON, 0));
+        lexemeList.add(new Lexeme(LexemeType.CLOSE, 1));
+        lexemeList.add(new Lexeme("return loginDtoResponse", 1));
+        lexemeList.add(new Lexeme(LexemeType.SEMICOLON, 0));
+        lexemeList.add(new Lexeme(LexemeType.CLOSE, 0));
+        outputter.writeOutput(lexemeList);
         assertEquals(
             "public Response login(Request request) throws BadException {\n" +
             "    User user = userService.get();\n" +

@@ -1,4 +1,4 @@
-package ru.format.parser;
+package ru.format.io;
 
 import java.io.FileWriter;
 import java.io.IOException;

@@ -1,6 +1,6 @@
 package ru.format.formater;
 
-public enum TokenType {
+public enum LexemeType {
     OPEN,
     CLOSE,
     SEMICOLON,

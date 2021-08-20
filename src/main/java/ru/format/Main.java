@@ -4,8 +4,8 @@ import ru.format.exceptions.CloseException;
 import ru.format.exceptions.ReaderException;
 import ru.format.exceptions.WriterException;
 import ru.format.formater.Formatter;
-import ru.format.parser.FileReaderMy;
-import ru.format.parser.FileWriterMy;
+import ru.format.io.FileReaderMy;
+import ru.format.io.FileWriterMy;
 
 public class Main {
     private static final String outputFile = "code_output.txt";

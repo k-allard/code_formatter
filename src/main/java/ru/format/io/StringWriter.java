@@ -1,4 +1,4 @@
-package ru.format.parser;
+package ru.format.io;
 
 import ru.format.exceptions.CloseException;
 
@@ -24,7 +24,7 @@ public class StringWriter implements IWriter {
     }
 
     @Override
-    public void close() throws CloseException {
+    public void close() {
 
     }
 }
