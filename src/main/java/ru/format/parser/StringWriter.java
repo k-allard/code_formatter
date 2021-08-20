@@ -1,5 +1,7 @@
 package ru.format.parser;
 
+import ru.format.exceptions.CloseException;
+
 public class StringWriter implements IWriter {
 
     private final StringBuilder outString;
@@ -19,5 +21,10 @@ public class StringWriter implements IWriter {
 
     public String toString() {
         return outString.toString();
+    }
+
+    @Override
+    public void close() throws CloseException {
+
     }
 }

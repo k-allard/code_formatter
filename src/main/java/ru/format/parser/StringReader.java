@@ -1,5 +1,7 @@
 package ru.format.parser;
 
+import ru.format.exceptions.CloseException;
+
 public class StringReader implements IReader {
 
     private final String inputString;
@@ -18,5 +20,10 @@ public class StringReader implements IReader {
     @Override
     public char readChar() {
         return inputString.charAt(position++);
+    }
+
+    @Override
+    public void close() throws CloseException {
+
     }
 }

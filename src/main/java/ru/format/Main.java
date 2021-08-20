@@ -1,5 +1,6 @@
 package ru.format;
 
+import ru.format.exceptions.CloseException;
 import ru.format.exceptions.ReaderException;
 import ru.format.exceptions.WriterException;
 import ru.format.formater.Formatter;
@@ -24,7 +25,7 @@ public class Main {
                 var out = new FileWriterMy(outputFile)
         ) {
             formatter.format(in, out);
-        } catch (WriterException | ReaderException e) {
+        } catch (WriterException | ReaderException | CloseException e) {
             e.printStackTrace();
         }
         System.out.println("Success.");
