@@ -84,10 +84,7 @@ public class Formatter implements IFormatter {
         // Splitter splitter = new Splitter();
         // List<Token> tokenList = splitter.splitFileInTokens(content.toString());
 
-        Outputter outputter = new Outputter();
-        String result = outputter.getOutput(tokenList);
-        for (int i = 0; i < result.length(); i++) {
-            writer.writeChar(result.charAt(i));
-        }
+        Outputter outputter = new Outputter(writer);
+        outputter.writeOutput(tokenList);
     }
 }
