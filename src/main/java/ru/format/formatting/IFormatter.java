@@ -1,4 +1,4 @@
-package ru.format.formater;
+package ru.format.formatting;
 
 import ru.format.exceptions.FormatterException;
 import ru.format.exceptions.ReaderException;

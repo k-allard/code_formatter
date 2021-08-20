@@ -1,4 +1,4 @@
-package ru.format.formater;
+package ru.format.formatting;
 
 import java.util.List;
 import ru.format.exceptions.FormatterException;

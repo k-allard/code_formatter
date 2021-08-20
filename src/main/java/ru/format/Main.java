@@ -3,7 +3,7 @@ package ru.format;
 import ru.format.exceptions.CloseException;
 import ru.format.exceptions.ReaderException;
 import ru.format.exceptions.WriterException;
-import ru.format.formater.Formatter;
+import ru.format.formatting.Formatter;
 import ru.format.io.FileReaderMy;
 import ru.format.io.FileWriterMy;
 

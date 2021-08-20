@@ -1,4 +1,4 @@
-package ru.format.formater;
+package ru.format.formatting;
 
 public enum LexemeType {
     OPEN,
