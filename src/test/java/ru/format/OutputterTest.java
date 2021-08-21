@@ -23,20 +23,20 @@ class OutputterTest {
         outputter = new Outputter(out);
     }
 
-//    @Test
-//    void addSpacesZeroLevel() {
-//        assertEquals("", outputter.addSpaces(0));
-//    }
-//
-//    @Test
-//    void addSpacesFirstLevel() {
-//        assertEquals("    ", outputter.addSpaces(1));
-//    }
-//
-//    @Test
-//    void addSpacesFifthLevel() {
-//        assertEquals("                    ", outputter.addSpaces(5));
-//    }
+    @Test
+    void addSpacesZeroLevel() {
+        assertEquals("", outputter.getSpaces(0));
+    }
+
+    @Test
+    void addSpacesFirstLevel() {
+        assertEquals("    ", outputter.getSpaces(1));
+    }
+
+    @Test
+    void addSpacesFifthLevel() {
+        assertEquals("                    ", outputter.getSpaces(5));
+    }
 
     @Test
     void getOutput() throws WriterException {
