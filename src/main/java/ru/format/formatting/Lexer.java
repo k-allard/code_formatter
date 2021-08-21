@@ -11,18 +11,14 @@ public class Lexer {
     private static final char   SEMICOLON = ';';
     private static final String NEWLINE = "\n";
     private static final String MORE_THAN_ONE_SPACE = " +";
-    private static final String SPACE = " +";
+    private static final String SPACE = " ";
     private final IReader       reader;
 
     void deleteExtraSpacesAndNewlines(List<Lexeme> lexemeList) {
         for (Lexeme lexeme : lexemeList) {
-            if (lexeme.value.contains(NEWLINE)) {
-                lexeme.value = lexeme.value.replace(NEWLINE, "");
-            }
+            lexeme.value = lexeme.value.replaceAll(NEWLINE, "");
             lexeme.value = lexeme.value.trim();
-            if (lexeme.value.contains(MORE_THAN_ONE_SPACE)) {
-                lexeme.value = lexeme.value.replaceAll(MORE_THAN_ONE_SPACE, SPACE);
-            }
+            lexeme.value = lexeme.value.replaceAll(MORE_THAN_ONE_SPACE, SPACE);
         }
     }
 
