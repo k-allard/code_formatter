@@ -10,19 +10,20 @@ public class Lexer {
     private static final char   RIGHT_CURLY_BRACKET = '}';
     private static final char   SEMICOLON = ';';
     private static final String NEWLINE = "\n";
+    private static final String MORE_THAN_ONE_SPACE = " +";
+    private static final String SPACE = " +";
     private final IReader       reader;
 
-    List<Lexeme> trimWhitespaces(List<Lexeme> lexemeList) {
+    void deleteExtraSpacesAndNewlines(List<Lexeme> lexemeList) {
         for (Lexeme lexeme : lexemeList) {
             if (lexeme.value.contains(NEWLINE)) {
                 lexeme.value = lexeme.value.replace(NEWLINE, "");
             }
             lexeme.value = lexeme.value.trim();
-            if (lexeme.value.contains("  ")) {
-                lexeme.value = lexeme.value.replaceAll(" +", " ");
+            if (lexeme.value.contains(MORE_THAN_ONE_SPACE)) {
+                lexeme.value = lexeme.value.replaceAll(MORE_THAN_ONE_SPACE, SPACE);
             }
         }
-        return lexemeList;
     }
 
     void fixLevels(List<Lexeme> lexemeList) {
@@ -38,47 +39,43 @@ public class Lexer {
         }
     }
 
-    List<Lexeme> deleteEmptyTokens(List<Lexeme> lexemeList) {
-        List<Lexeme> newLexemeList = new ArrayList<>();
-        for (Lexeme lexeme : lexemeList) {
-            if (lexeme.lexemeType == LexemeType.TEXT && lexeme.value.length() == 0) {
-                continue;
+    void deleteEmptyTokens(List<Lexeme> lexemeList) {
+        for (int i = 0; i < lexemeList.size(); i++) {
+            if (lexemeList.get(i).lexemeType == LexemeType.TEXT && lexemeList.get(i).value.length() == 0) {
+                lexemeList.remove(i--);
             }
-            newLexemeList.add(lexeme);
         }
-        return newLexemeList;
+    }
+
+    void addTextLexeme(StringBuilder content, List<Lexeme> lexemeList, int levelCounter) {
+        if (content.length() != 0) {
+            lexemeList.add(new Lexeme(content.toString(), levelCounter));
+            content.setLength(0);
+        }
     }
 
     public List<Lexeme> getLexemes() throws ReaderException {
         StringBuilder content = new StringBuilder();
-        char ch;
         List<Lexeme> lexemeList = new ArrayList<>();
+        char ch;
         int levelCounter = 0;
         while (reader.hasChars()) {
             ch = reader.readChar();
             if (ch == LEFT_CURLY_BRACKET) {
-                if (content.length() != 0) {
-                    lexemeList.add(new Lexeme(content.toString(), levelCounter));
-                    content.setLength(0);
-                }
+                addTextLexeme(content, lexemeList, levelCounter);
                 lexemeList.add(new Lexeme(LexemeType.OPEN, levelCounter++));
             } else if (ch == RIGHT_CURLY_BRACKET) {
-                if (content.length() != 0) {
-                    lexemeList.add(new Lexeme(content.toString(), levelCounter));
-                    content.setLength(0);
-                }
+                addTextLexeme(content, lexemeList, levelCounter);
                 lexemeList.add(new Lexeme(LexemeType.CLOSE, levelCounter));
             } else if (ch == SEMICOLON) {
-                if (content.length() != 0) {
-                    lexemeList.add(new Lexeme(content.toString(), levelCounter));
-                    content.setLength(0);
-                }
+                addTextLexeme(content, lexemeList, levelCounter);
                 lexemeList.add(new Lexeme(LexemeType.SEMICOLON, levelCounter));
             } else {
                 content.append(ch);
             }
         }
-        lexemeList = deleteEmptyTokens(trimWhitespaces(lexemeList));
+        deleteExtraSpacesAndNewlines(lexemeList);
+        deleteEmptyTokens(lexemeList);
         fixLevels(lexemeList);
         return lexemeList;
     }
