@@ -1,24 +1,23 @@
 package ru.format;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.format.exceptions.WriterException;
 import ru.format.formatting.Lexeme;
 import ru.format.formatting.Outputter;
 import ru.format.formatting.LexemeType;
 import ru.format.io.StringWriter;
-
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class OutputterTest {
 
-    private static Outputter outputter;
-    private static StringWriter out;
+    private Outputter outputter;
+    private StringWriter out;
 
-    @BeforeAll
-    static void init() {
+    @BeforeEach
+    void createWriter() {
         out = new StringWriter();
         outputter = new Outputter(out);
     }
