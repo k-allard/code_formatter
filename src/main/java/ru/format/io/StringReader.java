@@ -1,6 +1,6 @@
 package ru.format.io;
 
-import ru.format.exceptions.CloseException;
+import ru.format.exceptions.ReaderException;
 
 public class StringReader implements IReader {
 
@@ -18,8 +18,12 @@ public class StringReader implements IReader {
     }
 
     @Override
-    public char readChar() {
-        return inputString.charAt(position++);
+    public char readChar() throws ReaderException {
+        try {
+            return inputString.charAt(position++);
+        } catch (IndexOutOfBoundsException e) {
+            throw new ReaderException("Reader readChar() exception");
+        }
     }
 
     @Override
