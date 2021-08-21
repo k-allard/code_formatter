@@ -24,22 +24,22 @@ class OutputterTest {
     }
 
     @Test
-    void addSpacesZeroLevel() {
+    void zeroLevelSpaces() {
         assertEquals("", outputter.getSpaces(0));
     }
 
     @Test
-    void addSpacesFirstLevel() {
+    void firstLevelSpaces() {
         assertEquals("    ", outputter.getSpaces(1));
     }
 
     @Test
-    void addSpacesFifthLevel() {
+    void fifthLevelSpaces() {
         assertEquals("                    ", outputter.getSpaces(5));
     }
 
     @Test
-    void getOutput() throws WriterException {
+    void twoLevelsOutput() throws WriterException {
 
         List<Lexeme> lexemeList = new ArrayList<>();
         lexemeList.add(new Lexeme("public Response login(Request request) throws BadException", 0));
@@ -65,5 +65,26 @@ class OutputterTest {
             "}\n" ,
 
             out.toString());
+    }
+
+    @Test
+    void ifClauseOutput() throws WriterException {
+
+        List<Lexeme> lexemeList = new ArrayList<>();
+        lexemeList.add(new Lexeme("if (start.minutes > stop.minutes)", 0));
+        lexemeList.add(new Lexeme(LexemeType.OPEN, 0));
+        lexemeList.add(new Lexeme("--stop.hours", 1));
+        lexemeList.add(new Lexeme(LexemeType.SEMICOLON, 0));
+        lexemeList.add(new Lexeme("stop.minutes += 60", 1));
+        lexemeList.add(new Lexeme(LexemeType.SEMICOLON, 0));
+        lexemeList.add(new Lexeme(LexemeType.CLOSE, 0));
+        outputter.output(lexemeList);
+        assertEquals(
+                "if (start.minutes > stop.minutes) {\n" +
+                        "    --stop.hours;\n" +
+                        "    stop.minutes += 60;\n" +
+                        "}\n" ,
+
+                out.toString());
     }
 }

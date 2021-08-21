@@ -10,10 +10,6 @@ public class StringWriter implements IWriter {
         outString = new StringBuilder();
     }
 
-    public StringWriter(String outString) {
-        this.outString = new StringBuilder(outString);
-    }
-
     @Override
     public void writeChar(char ch) {
         outString.append(ch);
