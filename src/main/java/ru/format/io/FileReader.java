@@ -6,11 +6,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ru.format.Main;
 import ru.format.exceptions.CloseException;
 import ru.format.exceptions.ReaderException;
 
 public class FileReader implements IReader {
 
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
     private final FileInputStream inputStream;
     private final Reader reader;
     private char ch;
@@ -21,7 +26,8 @@ public class FileReader implements IReader {
         try {
             this.inputStream = new FileInputStream(filename);
         } catch (FileNotFoundException e) {
-            throw new ReaderException("Reader exception: file not found");
+            logger.error("FileReader exception: file not found", e);
+            throw new ReaderException("FileReader exception: file not found");
         }
         this.reader = new InputStreamReader(this.inputStream, StandardCharsets.UTF_8);
     }
@@ -35,7 +41,8 @@ public class FileReader implements IReader {
                 return true;
             }
         } catch (IOException e) {
-            throw new ReaderException("Reader exception");
+            logger.error("FileReader.hasChars() exception", e);
+            throw new ReaderException("FileReader.hasChars() exception");
         }
         return false;
     }
@@ -50,7 +57,8 @@ public class FileReader implements IReader {
         try {
             inputStream.close();
         } catch (IOException e) {
-            throw new CloseException("Reader inputStream.close() exception");
+            logger.error("FileReader.close() exception", e);
+            throw new CloseException("FileReader.close() exception");
         }
     }
 }

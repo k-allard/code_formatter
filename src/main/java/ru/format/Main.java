@@ -1,7 +1,7 @@
 package ru.format;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.format.exceptions.CloseException;
 import ru.format.exceptions.ReaderException;
 import ru.format.exceptions.WriterException;
@@ -16,14 +16,13 @@ import ru.format.io.IWriter;
 public class Main {
 
     private static final String outputFile = "code_output.txt";
-    private static final Log logger = LogFactory.getLog(Main.class);        //TODO поменять на SLF4J
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws WriterException, ReaderException, CloseException {
         if (args.length != 1) {
             throw new IllegalArgumentException("Pass the filename as parameter!");
         }
-        System.out.println("Hi! This is code formatter");
-        System.out.println("Your input file is: " + args[0]);
+        logger.info("Your input file is: " + args[0]);
         Formatter formatter = new Formatter();
         try (
                 IReader reader = new FileReader(args[0]);
@@ -31,11 +30,8 @@ public class Main {
         ) {
             ILexer lexer = new Lexer(reader);
             formatter.format(lexer, writer);
-        } catch (WriterException | ReaderException | CloseException e) {
-            logger.error("Exception catched in Main", e);
-            return;
         }
-        System.out.println("Success.");
-        System.out.println("Result can be found in " + outputFile);
+        logger.info("File formatted.");
+        logger.info("Result can be found in " + outputFile);
     }
 }
