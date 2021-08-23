@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import ru.format.exceptions.ReaderException;
 import ru.format.exceptions.WriterException;
 import ru.format.formatting.Formatter;
+import ru.format.formatting.ILexer;
+import ru.format.formatting.Lexer;
 import ru.format.io.StringReader;
 import ru.format.io.StringWriter;
 
@@ -25,7 +27,8 @@ class FormatterTest {
                 "} ");
         var out = new StringWriter();
         Formatter formatter = new Formatter();
-        formatter.format(in, out);
+        ILexer lexer = new Lexer(in);
+        formatter.format(lexer, out);
 
         assertEquals("if (boo == null) {\n" +
                 "    return 1;\n" +
@@ -54,7 +57,8 @@ class FormatterTest {
                 "    }");
         var out = new StringWriter();
         Formatter formatter = new Formatter();
-        formatter.format(in, out);
+        ILexer lexer = new Lexer(in);
+        formatter.format(lexer, out);
 
         assertEquals("function {\n" +
                         "    if (blabla == null) {\n" +
@@ -83,7 +87,8 @@ class FormatterTest {
                 "return loginDtoResponse;      }");
         var out = new StringWriter();
         Formatter formatter = new Formatter();
-        formatter.format(in, out);
+        ILexer lexer = new Lexer(in);
+        formatter.format(lexer, out);
 
         assertEquals("public UserLoginResponse loginUser(UserLoginRequest request) throws BadRequestException {\n" +
                         "    User user = userService.getUserByEmail(request.getEmail());\n" +

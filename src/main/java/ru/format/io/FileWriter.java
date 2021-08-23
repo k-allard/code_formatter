@@ -12,7 +12,7 @@ public class FileWriter implements IWriter {
 
     private final Writer writer;
 
-    public FileWriter(String filename) throws WriterException {   //TODO все конструкторы классов вынести вверх
+    public FileWriter(String filename) throws WriterException {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(filename);
             writer = new OutputStreamWriter(fileOutputStream, StandardCharsets.UTF_8);

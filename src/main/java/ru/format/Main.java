@@ -6,8 +6,12 @@ import ru.format.exceptions.CloseException;
 import ru.format.exceptions.ReaderException;
 import ru.format.exceptions.WriterException;
 import ru.format.formatting.Formatter;
+import ru.format.formatting.ILexer;
+import ru.format.formatting.Lexer;
 import ru.format.io.FileReader;
 import ru.format.io.FileWriter;
+import ru.format.io.IReader;
+import ru.format.io.IWriter;
 
 public class Main {
 
@@ -22,10 +26,11 @@ public class Main {
         System.out.println("Your input file is: " + args[0]);
         Formatter formatter = new Formatter();
         try (
-                var in = new FileReader(args[0]); // TODO убрать
-                var out = new FileWriter(outputFile)
+                IReader reader = new FileReader(args[0]);
+                IWriter writer = new FileWriter(outputFile)
         ) {
-            formatter.format(in, out);
+            ILexer lexer = new Lexer(reader);
+            formatter.format(lexer, writer);
         } catch (WriterException | ReaderException | CloseException e) {
             logger.error("Exception catched in Main", e);
             return;

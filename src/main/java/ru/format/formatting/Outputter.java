@@ -10,6 +10,10 @@ public class Outputter {
 
     private final IWriter       writer;
 
+    public Outputter(IWriter writer) {
+        this.writer = writer;
+    }
+
     public void writeString(String str) throws WriterException {
         for (int i = 0; i < str.length(); i++) {
             writer.writeChar(str.charAt(i));
@@ -33,9 +37,5 @@ public class Outputter {
                 writeString(";\n");
             }
         }
-    }
-
-    public Outputter(IWriter writer) {
-        this.writer = writer;
     }
 }

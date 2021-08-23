@@ -5,7 +5,7 @@ import java.util.List;
 import ru.format.exceptions.ReaderException;
 import ru.format.io.IReader;
 
-public class Lexer {
+public class Lexer implements ILexer {
     private static final char   LEFT_CURLY_BRACKET = '{';
     private static final char   RIGHT_CURLY_BRACKET = '}';
     private static final char   SEMICOLON = ';';
@@ -13,6 +13,10 @@ public class Lexer {
     private static final String MORE_THAN_ONE_SPACE = " +";
     private static final String SPACE = " ";
     private final IReader       reader;
+
+    public Lexer(IReader reader) {
+        this.reader = reader;
+    }
 
     void deleteExtraSpacesAndNewlines(List<Lexeme> lexemeList) {
         for (Lexeme lexeme : lexemeList) {
@@ -74,9 +78,5 @@ public class Lexer {
         deleteEmptyTokens(lexemeList);
         fixLevels(lexemeList);
         return lexemeList;
-    }
-
-    public Lexer(IReader reader) {
-        this.reader = reader;
     }
 }
