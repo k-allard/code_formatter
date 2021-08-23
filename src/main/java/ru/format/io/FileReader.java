@@ -26,7 +26,7 @@ public class FileReader implements IReader {
         try {
             this.inputStream = new FileInputStream(filename);
         } catch (FileNotFoundException e) {
-            logger.error("FileReader exception: file not found", e);
+            logger.error("FileReader exception: file {} not found", filename, e);
             throw new ReaderException("FileReader exception: file not found");
         }
         this.reader = new InputStreamReader(this.inputStream, StandardCharsets.UTF_8);
