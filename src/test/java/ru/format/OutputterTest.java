@@ -17,7 +17,7 @@ class OutputterTest {
     private StringWriter out;
 
     @BeforeEach
-    void createWriter() {
+    void setUp() {
         out = new StringWriter();
         outputter = new Outputter(out);
     }

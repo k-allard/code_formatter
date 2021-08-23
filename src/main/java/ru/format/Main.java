@@ -6,13 +6,13 @@ import ru.format.exceptions.CloseException;
 import ru.format.exceptions.ReaderException;
 import ru.format.exceptions.WriterException;
 import ru.format.formatting.Formatter;
-import ru.format.io.FileReaderMy;
-import ru.format.io.FileWriterMy;
+import ru.format.io.FileReader;
+import ru.format.io.FileWriter;
 
 public class Main {
 
     private static final String outputFile = "code_output.txt";
-    private static final Log logger = LogFactory.getLog(Main.class);
+    private static final Log logger = LogFactory.getLog(Main.class);        //TODO поменять на SLF4J
 
     public static void main(String[] args) {
         if (args.length != 1) {
@@ -22,8 +22,8 @@ public class Main {
         System.out.println("Your input file is: " + args[0]);
         Formatter formatter = new Formatter();
         try (
-                var in = new FileReaderMy(args[0]);
-                var out = new FileWriterMy(outputFile)
+                var in = new FileReader(args[0]); // TODO убрать
+                var out = new FileWriter(outputFile)
         ) {
             formatter.format(in, out);
         } catch (WriterException | ReaderException | CloseException e) {
