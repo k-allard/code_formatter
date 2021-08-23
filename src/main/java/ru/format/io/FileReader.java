@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.format.Main;
@@ -18,9 +17,7 @@ public class FileReader implements IReader {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
     private final FileInputStream inputStream;
     private final Reader reader;
-    private char ch;
-
-    //TODO изменить логику - например, прочитать и сохранить первый символ в конструкторе и т.д.
+    private int currentChar;
 
     public FileReader(String filename) throws ReaderException {
         try {
@@ -30,26 +27,33 @@ public class FileReader implements IReader {
             throw new ReaderException("FileReader exception: file not found");
         }
         this.reader = new InputStreamReader(this.inputStream, StandardCharsets.UTF_8);
-    }
-
-    @Override
-    public boolean hasChars() throws ReaderException {  //TODO не должен читать
-        int chInt;
         try {
-            if ((chInt = reader.read()) != -1) {
-                ch = (char) chInt;
-                return true;
-            }
+            currentChar = reader.read();
         } catch (IOException e) {
-            logger.error("FileReader.hasChars() exception", e);
-            throw new ReaderException("FileReader.hasChars() exception");
+            logger.error("FileReader exception", e);
+            throw new ReaderException("FileReader exception");
         }
-        return false;
     }
 
     @Override
-    public char readChar() {
-        return (ch);
+    public boolean hasChars() {
+        return currentChar != -1;
+    }
+
+    @Override
+    public char readChar() throws ReaderException {
+        if (hasChars()) {
+            int previousChar = currentChar;
+            try {
+                currentChar = reader.read();
+            } catch (IOException e) {
+                logger.error("FileReader.readChar() exception", e);
+                throw new ReaderException("FileReader.readChar() exception");
+            }
+            return (char) previousChar;
+        }
+        logger.error("FileReader.readChar(): You need to call hasChars() first before reading");
+        throw new ReaderException("FileReader.readChar() exception: hasChars() returned false");
     }
 
     @Override
