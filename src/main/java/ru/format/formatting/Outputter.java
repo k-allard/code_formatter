@@ -1,12 +1,13 @@
 package ru.format.formatting;
 
-import java.util.List;
 import ru.format.exceptions.WriterException;
-import ru.format.io.IWriter;
+import ru.format.formatting.interfaces.IToken;
+import ru.format.io.interfaces.IWriter;
 
 public class Outputter {
 
-    private static final int    SPACES_FOR_LEVEL = 4;
+    private static final int SPACES_FOR_LEVEL = 4;
+    int levelCounter = 0;
 
     private final IWriter       writer;
 
@@ -24,18 +25,19 @@ public class Outputter {
         return (" ".repeat(Math.max(0, level * SPACES_FOR_LEVEL)));
     }
 
-    public void output(List<Lexeme> lexemeList) throws WriterException {
-        for (Lexeme lexeme : lexemeList) {
-            writeString(getSpaces(lexeme.level));
-            if (lexeme.lexemeType == LexemeType.TEXT) {
-                writeString(lexeme.value);
-            } else if (lexeme.lexemeType == LexemeType.OPEN) {
-                writeString(" {\n");
-            } else if (lexeme.lexemeType == LexemeType.CLOSE) {
-                writeString("}\n");
-            } else if (lexeme.lexemeType == LexemeType.SEMICOLON) {
-                writeString(";\n");
-            }
+    public void output(IToken token) throws WriterException {
+        if (token.getName().equals("TEXT") && token.getLexeme().length() != 0) {
+            writeString(getSpaces(levelCounter));
+            writeString(token.getLexeme());
+        } else if (token.getName().equals("OPEN")) {
+            levelCounter++;
+            writeString(" {\n");
+        } else if (token.getName().equals("CLOSE")) {
+            levelCounter--;
+            writeString(getSpaces(levelCounter));
+            writeString("}\n");
+        } else if (token.getName().equals("SEMI")) {
+            writeString(";\n");
         }
     }
 }

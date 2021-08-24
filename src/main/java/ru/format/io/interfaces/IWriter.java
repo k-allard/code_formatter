@@ -1,4 +1,4 @@
-package ru.format.io;
+package ru.format.io.interfaces;
 
 import ru.format.exceptions.WriterException;
 

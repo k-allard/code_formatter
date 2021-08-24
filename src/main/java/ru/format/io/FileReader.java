@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import ru.format.Main;
 import ru.format.exceptions.CloseException;
 import ru.format.exceptions.ReaderException;
+import ru.format.io.interfaces.IReader;
 
 public class FileReader implements IReader {
 
