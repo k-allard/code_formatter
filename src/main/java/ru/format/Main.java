@@ -6,13 +6,14 @@ import ru.format.exceptions.CloseException;
 import ru.format.exceptions.ReaderException;
 import ru.format.exceptions.WriterException;
 import ru.format.formatting.Formatter;
-import ru.format.formatting.Lexer;
-import ru.format.formatting.interfaces.IFormatter;
-import ru.format.formatting.interfaces.ILexer;
+import ru.format.lexer.Lexer;
+import ru.format.formatting.IFormatter;
+import ru.format.lexer.ILexer;
 import ru.format.io.FileReader;
 import ru.format.io.FileWriter;
-import ru.format.io.interfaces.IReader;
-import ru.format.io.interfaces.IWriter;
+import ru.format.io.IReader;
+import ru.format.io.IWriter;
+import ru.format.lexer.LexerStateMachine;
 
 public class Main {
 
@@ -29,8 +30,8 @@ public class Main {
                 IReader reader = new FileReader(args[0]);
                 IWriter writer = new FileWriter(outputFile)
         ) {
-            ILexer lexer = new Lexer(reader);
-            formatter.format(lexer, writer);
+            ILexer lexer = new LexerStateMachine(reader);
+            formatter.format(lexer, writer);        // Each format() call starts the Formatter State Machine
         }
         logger.info("File formatted.");
         logger.info("Result can be found in " + outputFile);

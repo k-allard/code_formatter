@@ -1,4 +1,4 @@
-package ru.format.formatting.interfaces;
+package ru.format.lexer;
 
 public interface IToken {
     String getName();

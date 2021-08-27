@@ -1,4 +1,4 @@
-package ru.format.io.interfaces;
+package ru.format.io;
 
 import ru.format.exceptions.CloseException;
 

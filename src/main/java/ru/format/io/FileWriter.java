@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.format.exceptions.CloseException;
 import ru.format.exceptions.WriterException;
-import ru.format.io.interfaces.IWriter;
 
 public class FileWriter implements IWriter {
 

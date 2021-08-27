@@ -1,9 +1,7 @@
-package ru.format.formatting;
+package ru.format.lexer;
 
 import ru.format.exceptions.ReaderException;
-import ru.format.formatting.interfaces.ILexer;
-import ru.format.formatting.interfaces.IToken;
-import ru.format.io.interfaces.IReader;
+import ru.format.io.IReader;
 
 public class Lexer implements ILexer {
     private static final char   LEFT_CURLY_BRACKET = '{';
@@ -37,7 +35,7 @@ public class Lexer implements ILexer {
             return new Token("CLOSE", "}");
         } else if (charLastRead == SEMICOLON) {
             charLastRead = '\0';
-            return new Token("SEMI", ";");
+            return new Token("SEMICOLON", ";");
         }
         StringBuilder textLexeme = new StringBuilder();
         while (reader.hasChars()) {

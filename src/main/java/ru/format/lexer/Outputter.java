@@ -1,8 +1,7 @@
-package ru.format.formatting;
+package ru.format.lexer;
 
 import ru.format.exceptions.WriterException;
-import ru.format.formatting.interfaces.IToken;
-import ru.format.io.interfaces.IWriter;
+import ru.format.io.IWriter;
 
 public class Outputter {
 
@@ -36,7 +35,7 @@ public class Outputter {
             levelCounter--;
             writeString(getSpaces(levelCounter));
             writeString("}\n");
-        } else if (token.getName().equals("SEMI")) {
+        } else if (token.getName().equals("SEMICOLON")) {
             writeString(";\n");
         }
     }

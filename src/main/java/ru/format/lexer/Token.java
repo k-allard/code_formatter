@@ -1,6 +1,4 @@
-package ru.format.formatting;
-
-import ru.format.formatting.interfaces.IToken;
+package ru.format.lexer;
 
 public class Token implements IToken {
 

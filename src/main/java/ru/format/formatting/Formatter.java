@@ -3,10 +3,10 @@ package ru.format.formatting;
 import ru.format.exceptions.FormatterException;
 import ru.format.exceptions.ReaderException;
 import ru.format.exceptions.WriterException;
-import ru.format.formatting.interfaces.IFormatter;
-import ru.format.formatting.interfaces.ILexer;
-import ru.format.formatting.interfaces.IToken;
-import ru.format.io.interfaces.IWriter;
+import ru.format.io.IWriter;
+import ru.format.lexer.ILexer;
+import ru.format.lexer.IToken;
+import ru.format.lexer.Outputter;
 
 public class Formatter implements IFormatter {
 
@@ -15,7 +15,7 @@ public class Formatter implements IFormatter {
             throws FormatterException, WriterException, ReaderException {
         Outputter outputter = new Outputter(writer);
         while (lexer.hasMoreTokens()) {
-            IToken token = lexer.readToken();
+            IToken token = lexer.readToken();       // Each readToken() call starts the Lexer State Machine
             outputter.output(token);
         }
     }

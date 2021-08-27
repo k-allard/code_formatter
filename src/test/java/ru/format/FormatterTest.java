@@ -4,12 +4,10 @@ import org.junit.jupiter.api.Test;
 import ru.format.exceptions.ReaderException;
 import ru.format.exceptions.WriterException;
 import ru.format.formatting.Formatter;
-import ru.format.formatting.interfaces.ILexer;
-import ru.format.formatting.Lexer;
-import ru.format.formatting.interfaces.IToken;
+import ru.format.lexer.ILexer;
+import ru.format.lexer.Lexer;
 import ru.format.io.StringReader;
 import ru.format.io.StringWriter;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

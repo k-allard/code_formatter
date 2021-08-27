@@ -1,7 +1,5 @@
 package ru.format.io;
 
-import ru.format.io.interfaces.IWriter;
-
 public class StringWriter implements IWriter {
 
     private final StringBuilder outString;
