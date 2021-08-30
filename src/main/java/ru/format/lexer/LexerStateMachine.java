@@ -1,10 +1,10 @@
 package ru.format.lexer;
 
-import ru.format.exceptions.CloseException;
+import lombok.extern.slf4j.Slf4j;
 import ru.format.exceptions.ReaderException;
 import ru.format.io.IReader;
-import ru.format.io.StringReader;
 
+@Slf4j
 public class LexerStateMachine implements ILexer {
 
     private final CommandRepository commandRepository;
@@ -33,7 +33,7 @@ public class LexerStateMachine implements ILexer {
     @Override
     public IToken nextToken() throws ReaderException {
         State state = State.INITIAL;
-
+        log.debug("We are in LSM::nextToken()");
         while (postponeReader.hasChars() && state != State.TERMINATED) {
             state = step(state, postponeReader);
         }
