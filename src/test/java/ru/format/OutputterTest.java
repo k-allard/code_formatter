@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 //import ru.format.exceptions.WriterException;
 //import ru.format.formatting.Lexeme;
-import ru.format.lexer.Outputter;
+import ru.format.formatting.Outputter;
 //import ru.format.formatting.LexemeType;
 import ru.format.io.StringWriter;
 

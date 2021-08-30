@@ -1,7 +1,8 @@
-package ru.format.lexer;
+package ru.format.formatting;
 
 import ru.format.exceptions.WriterException;
 import ru.format.io.IWriter;
+import ru.format.lexer.IToken;
 
 public class Outputter {
 

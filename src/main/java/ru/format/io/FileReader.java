@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import ru.format.Main;
 import ru.format.exceptions.CloseException;
 import ru.format.exceptions.ReaderException;
+import ru.format.lexer.Signal;
 
 public class FileReader implements IReader {
 
@@ -18,6 +19,7 @@ public class FileReader implements IReader {
     private final FileInputStream inputStream;
     private final Reader reader;
     private int currentChar;
+    private Signal signal;
 
     public FileReader(String filename) throws ReaderException {
         try {

@@ -26,7 +26,7 @@ public class Lexer implements ILexer {
     }
 
     @Override
-    public IToken readToken() throws ReaderException {
+    public IToken nextToken() throws ReaderException {
         if (charLastRead == LEFT_CURLY_BRACKET) {
             charLastRead = '\0';
             return new Token("OPEN", "{");
