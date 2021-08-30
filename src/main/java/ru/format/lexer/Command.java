@@ -9,6 +9,6 @@ public class Command {
         context = new Context();
     }
 
-    public void execute() {
+    public void execute(char ch, IContext context) {
     }
 }

@@ -32,16 +32,21 @@ public class LexerStateMachine implements ILexer {
 
     @Override
     public IToken nextToken() throws ReaderException {
-        char ch;
         State state = State.INITIAL;
-        StringBuilder stringBuilder = new StringBuilder();
 
+        while (postponeReader.hasChars() && state != State.TERMINATED) {
+            state = step(state, postponeReader);
+        }
 
         while (reader.hasChars() && state != State.TERMINATED) {
-            stringBuilder.append(ch = reader.readChar());
-            commandRepository.getCommand(state, ch).execute();
-            state = stateTransitions.nextState(state, ch);
+            state = step(state, reader);
         }
-        return new Token(state.toString(), stringBuilder.toString());
+        return tokenBuilder.buildToken();
+    }
+
+    private State step(State state, IReader reader) throws ReaderException {
+        char ch = reader.readChar();
+        commandRepository.getCommand(state, ch).execute(ch, context);
+        return stateTransitions.nextState(state, ch);
     }
 }
