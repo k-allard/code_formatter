@@ -18,11 +18,14 @@ public class CommandRepository {
     public CommandRepository() {
         commandMap = new HashMap<>();
         commandMap.put(new ImmutablePair<>(State.INITIAL, null), new Command(CommandTypeEnum.CMD_APPEND_LEXEME));
+        commandMap.put(new ImmutablePair<>(State.SPACING, null), new Command(CommandTypeEnum.CMD_APPEND_POSTPONE));
+        commandMap.put(new ImmutablePair<>(State.INITIAL, new Signal(' ')), new Command(CommandTypeEnum.CMD_APPEND_LEXEME));
+        commandMap.put(new ImmutablePair<>(State.SPACING, new Signal(' ')), new Command(CommandTypeEnum.CMD_APPEND_LEXEME));
+
     }
 
     public Command getCommand(State state, Signal ch) {
-
-        if (ch.getCh() != 'q') {
+        if (ch.getCh() != ' ') {
             ch = null;
         }
         return commandMap.getOrDefault(new ImmutablePair<>(state, ch), null);

@@ -1,4 +1,2 @@
-public User
-{
- if (user == null)
-return loginDtoResponse; }
+func  { return 0;
+}

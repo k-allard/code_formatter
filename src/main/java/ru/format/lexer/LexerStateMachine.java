@@ -1,11 +1,10 @@
 package ru.format.lexer;
 
+import java.util.HashMap;
 import lombok.extern.slf4j.Slf4j;
 import ru.format.exceptions.ReaderException;
 import ru.format.io.IReader;
 import ru.format.io.PostponeReader;
-
-import java.util.HashMap;
 
 @Slf4j
 public class LexerStateMachine implements ILexer, IContext {
@@ -30,7 +29,8 @@ public class LexerStateMachine implements ILexer, IContext {
         tokenNames = new HashMap<>();
         tokenNames.put('\n', "newline");
         tokenNames.put(';', "semicolon");
-        tokenNames.put(' ', "spaces");
+        tokenNames.put('{', "open");
+        tokenNames.put('}', "close");
 
     }
 
@@ -64,7 +64,11 @@ public class LexerStateMachine implements ILexer, IContext {
         }
         State newState = stateTransitions.nextState(state, new Signal(ch));
         log.debug("State transition: [{}] ---> [{}]", state, newState);
-        setTokenName(tokenNames.getOrDefault(ch, "char"));
+        if (state == State.SPACING) {
+            setTokenName("space");
+        } else {
+            setTokenName(tokenNames.getOrDefault(ch, "char"));
+        }
         return newState;
     }
 
