@@ -3,26 +3,25 @@ package ru.format.lexer;
 import lombok.extern.slf4j.Slf4j;
 import ru.format.exceptions.ReaderException;
 import ru.format.io.IReader;
+import ru.format.io.PostponeReader;
 
 @Slf4j
-public class LexerStateMachine implements ILexer {
+public class LexerStateMachine implements ILexer, IContext {
 
     private final CommandRepository commandRepository;
     private final StateTransitions stateTransitions;
     private final IReader reader;
     private final IReader postponeReader;
-    private final TokenBuilder tokenBuilder;
-    private final Command command;
-    private final IContext context;
+    private TokenBuilder tokenBuilder;
+    private final StringBuilder postponeString;
 
-    public LexerStateMachine(IReader reader) throws ReaderException {
+    public LexerStateMachine(IReader reader) {
+        log.debug("New Lexer State Machine created");
         this.reader = reader;
         commandRepository = new CommandRepository();
         stateTransitions = new StateTransitions();
-        postponeReader = new PostponeReader();
-        tokenBuilder = new TokenBuilder();
-        command = new Command();
-        context = new Context();
+        postponeString = new StringBuilder();
+        postponeReader = new PostponeReader(postponeString);
     }
 
     @Override
@@ -32,13 +31,15 @@ public class LexerStateMachine implements ILexer {
 
     @Override
     public IToken nextToken() throws ReaderException {
+        tokenBuilder = new TokenBuilder();
         State state = State.INITIAL;
-        log.debug("We are in LSM::nextToken()");
         while (postponeReader.hasChars() && state != State.TERMINATED) {
+            log.debug("Read from postponeReader");
             state = step(state, postponeReader);
         }
 
         while (reader.hasChars() && state != State.TERMINATED) {
+            log.debug("Read from reader");
             state = step(state, reader);
         }
         return tokenBuilder.buildToken();
@@ -46,7 +47,31 @@ public class LexerStateMachine implements ILexer {
 
     private State step(State state, IReader reader) throws ReaderException {
         char ch = reader.readChar();
-        commandRepository.getCommand(state, ch).execute(ch, context);
-        return stateTransitions.nextState(state, ch);
+        log.debug("Read char [{}]", ch);
+        Command command = commandRepository.getCommand(state, new Signal(ch));
+        if (command == null) {
+            log.debug("FAIL: Command for state [{}] and ch [{}] not found", state, ch);
+        } else {
+            command.execute(new Signal(ch), this);
+            log.debug("SUCCESS: Command [{}] for state [{}] and ch [{}] executed", command.getCommandType(), state, ch);
+        }
+        State newState = stateTransitions.nextState(state, new Signal(ch));
+        log.debug("State transition: [{}] ---> [{}]", state, newState);
+        return newState;
+    }
+
+    @Override
+    public void appendLexeme(char ch) {
+        tokenBuilder.appendLexeme(ch);
+    }
+
+    @Override
+    public void setTokenName(String name) {
+        tokenBuilder.setName(name);
+    }
+
+    @Override
+    public void appendPostpone(char ch) {
+        postponeString.append(ch);
     }
 }

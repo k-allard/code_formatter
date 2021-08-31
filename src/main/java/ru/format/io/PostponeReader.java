@@ -1,21 +1,22 @@
 package ru.format.io;
 
 import lombok.extern.slf4j.Slf4j;
+import ru.format.exceptions.CloseException;
 import ru.format.exceptions.ReaderException;
 
 @Slf4j
-public class StringReader implements IReader {
+public class PostponeReader implements IReader {
 
-    private final String inputString;
+    private final StringBuilder inputString;
     private int position;
 
-    public StringReader(String inputString) {
+    public PostponeReader(StringBuilder inputString) {
         this.inputString = inputString;
         position = 0;
     }
 
     @Override
-    public boolean hasChars() {
+    public boolean hasChars() throws ReaderException {
         return (position < inputString.length());
     }
 
@@ -30,7 +31,7 @@ public class StringReader implements IReader {
     }
 
     @Override
-    public void close() {
+    public void close() throws CloseException {
 
     }
 }

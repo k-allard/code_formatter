@@ -1,10 +1,22 @@
 package ru.format.lexer;
 
+import java.util.HashMap;
+import java.util.Map;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+
 public class StateTransitions {
     private Signal signal;
     private State state;
+    private final Map<Pair<State, Signal>, State> stateTransitionMap;
 
-    State nextState(State state, char ch) {
-        return null;
+    public StateTransitions() {
+        stateTransitionMap = new HashMap<>();
+        stateTransitionMap.put(new ImmutablePair<>(State.INITIAL, null), State.TERMINATED);
+
+    }
+
+    State nextState(State state, Signal signal) {
+        return stateTransitionMap.getOrDefault(new ImmutablePair<>(state, null), null);
     }
 }

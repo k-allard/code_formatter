@@ -2,13 +2,27 @@ package ru.format.lexer;
 
 public class Command {
 
-    private Context context;
-    private Signal signal;
-
-    public Command() {
-        context = new Context();
+    public CommandTypeEnum getCommandType() {
+        return commandType;
     }
 
-    public void execute(char ch, IContext context) {
+    private final CommandTypeEnum commandType;
+
+    public Command(CommandTypeEnum commandType) {
+        this.commandType = commandType;
+    }
+
+    public void execute(Signal signal, IContext context) {
+        switch (commandType) {
+            case CMD_APPEND_LEXEME:
+                context.appendLexeme(signal.getCh());
+                break;
+            case CMD_APPEND_POSTPONE:
+                context.appendPostpone(signal.getCh());
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + commandType);
+        }
     }
 }
+

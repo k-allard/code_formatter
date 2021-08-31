@@ -4,6 +4,10 @@ public class Signal {
 
     private char ch;
 
+    public Signal(char ch) {
+        this.ch = ch;
+    }
+
     public char getCh() {
         return ch;
     }
