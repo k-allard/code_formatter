@@ -12,11 +12,11 @@ public class StateTransitions {
 
     public StateTransitions() {
         stateTransitionMap = new HashMap<>();
-        stateTransitionMap.put(new ImmutablePair<>(State.INITIAL, null), State.TERMINATED);
+        stateTransitionMap.put(new ImmutablePair<>(State.INITIAL, new Signal(' ')), State.SPACING);
 
     }
 
     State nextState(State state, Signal signal) {
-        return stateTransitionMap.getOrDefault(new ImmutablePair<>(state, null), null);
+        return stateTransitionMap.getOrDefault(new ImmutablePair<>(state, signal), State.TERMINATED);
     }
 }

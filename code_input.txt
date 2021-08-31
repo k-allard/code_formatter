@@ -1,4 +1,4 @@
-public  User
+public User
 {
  if (user == null)
-return loginDtoResponse;      }
+return loginDtoResponse; }

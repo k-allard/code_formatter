@@ -5,6 +5,8 @@ import ru.format.exceptions.ReaderException;
 import ru.format.io.IReader;
 import ru.format.io.PostponeReader;
 
+import java.util.HashMap;
+
 @Slf4j
 public class LexerStateMachine implements ILexer, IContext {
 
@@ -15,6 +17,8 @@ public class LexerStateMachine implements ILexer, IContext {
     private TokenBuilder tokenBuilder;
     private final StringBuilder postponeString;
 
+    private final HashMap<Character, String> tokenNames;
+
     public LexerStateMachine(IReader reader) {
         log.debug("New Lexer State Machine created");
         this.reader = reader;
@@ -22,6 +26,12 @@ public class LexerStateMachine implements ILexer, IContext {
         stateTransitions = new StateTransitions();
         postponeString = new StringBuilder();
         postponeReader = new PostponeReader(postponeString);
+
+        tokenNames = new HashMap<>();
+        tokenNames.put('\n', "newline");
+        tokenNames.put(';', "semicolon");
+        tokenNames.put(' ', "spaces");
+
     }
 
     @Override
@@ -34,12 +44,10 @@ public class LexerStateMachine implements ILexer, IContext {
         tokenBuilder = new TokenBuilder();
         State state = State.INITIAL;
         while (postponeReader.hasChars() && state != State.TERMINATED) {
-            log.debug("Read from postponeReader");
             state = step(state, postponeReader);
         }
 
         while (reader.hasChars() && state != State.TERMINATED) {
-            log.debug("Read from reader");
             state = step(state, reader);
         }
         return tokenBuilder.buildToken();
@@ -47,7 +55,6 @@ public class LexerStateMachine implements ILexer, IContext {
 
     private State step(State state, IReader reader) throws ReaderException {
         char ch = reader.readChar();
-        log.debug("Read char [{}]", ch);
         Command command = commandRepository.getCommand(state, new Signal(ch));
         if (command == null) {
             log.debug("FAIL: Command for state [{}] and ch [{}] not found", state, ch);
@@ -57,6 +64,7 @@ public class LexerStateMachine implements ILexer, IContext {
         }
         State newState = stateTransitions.nextState(state, new Signal(ch));
         log.debug("State transition: [{}] ---> [{}]", state, newState);
+        setTokenName(tokenNames.getOrDefault(ch, "char"));
         return newState;
     }
 

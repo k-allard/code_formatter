@@ -2,7 +2,7 @@ package ru.format.lexer;
 
 public enum State {
     INITIAL,
-    TEXT,
+    SPACING,
     OPEN,
     CLOSE,
     SEMICOLON,
