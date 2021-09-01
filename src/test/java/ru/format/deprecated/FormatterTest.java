@@ -1,4 +1,4 @@
-package ru.format;
+package ru.format.deprecated;
 
 import org.junit.jupiter.api.Test;
 import ru.format.exceptions.ReaderException;

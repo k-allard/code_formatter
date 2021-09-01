@@ -5,7 +5,7 @@
     <option name="PROGRAM_PARAMETERS" value="code_input.txt" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="ru.format.*" />
+        <option name="PATTERN" value="ru.format.deprecated.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>
