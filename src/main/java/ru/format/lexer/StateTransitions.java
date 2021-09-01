@@ -2,25 +2,23 @@ package ru.format.lexer;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 
 public class StateTransitions {
-    private Signal signal;
-    private State state;
-    private final Map<Pair<State, Signal>, State> stateTransitionMap;
+    private LexerState state;
+    private final Map<Pair<LexerState, Character>, LexerState> stateTransitionMap;
 
     public StateTransitions() {
         stateTransitionMap = new HashMap<>();
-        stateTransitionMap.put(new ImmutablePair<>(State.INITIAL, new Signal(' ')), State.SPACING);
-        stateTransitionMap.put(new ImmutablePair<>(State.SPACING, new Signal(' ')), State.SPACING);
-
+        stateTransitionMap.put(Pair.create(LexerState.INITIAL, ' '), LexerState.SPACING);
+        stateTransitionMap.put(Pair.create(LexerState.SPACING, ' '), LexerState.SPACING);
+        stateTransitionMap.put(Pair.create(LexerState.SPACING, null), LexerState.TERMINATED);
+        stateTransitionMap.put(Pair.create(LexerState.INITIAL, null), LexerState.TERMINATED);
     }
 
-    State nextState(State state, Signal signal) {
-        if (signal.getCh() != ' ') {
-            signal = null;
-        }
-        return stateTransitionMap.getOrDefault(new ImmutablePair<>(state, signal), State.TERMINATED);
+    LexerState nextState(LexerState state, Character ch) {
+        LexerState newState = stateTransitionMap.get(Pair.create(state, ch));
+        return (newState == null)
+                ? stateTransitionMap.get(Pair.create(state, null))
+                : newState;
     }
 }

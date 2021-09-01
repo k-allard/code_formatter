@@ -6,7 +6,7 @@ import ru.format.exceptions.ReaderException;
 @Slf4j
 public class StringReader implements IReader {
 
-    private final String inputString;
+    private String inputString;
     private int position;
 
     public StringReader(String inputString) {
@@ -27,6 +27,11 @@ public class StringReader implements IReader {
             log.error("StringReader.readChar() exception", e);
             throw new ReaderException("StringReader.readChar() exception");
         }
+    }
+
+    @Override
+    public void clearBuffer() {
+        inputString = "";
     }
 
     @Override

@@ -1,4 +1,4 @@
-package ru.format.formatting;
+package ru.format.formatting.deprecated;
 
 import ru.format.exceptions.WriterException;
 import ru.format.io.IWriter;

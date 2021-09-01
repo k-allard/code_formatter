@@ -1,6 +1,6 @@
 package ru.format.lexer;
 
-public enum State {
+public enum LexerState {
     INITIAL,
     SPACING,
     TERMINATED

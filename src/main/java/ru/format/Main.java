@@ -4,8 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import ru.format.exceptions.CloseException;
 import ru.format.exceptions.ReaderException;
 import ru.format.exceptions.WriterException;
-import ru.format.formatting.Formatter;
 import ru.format.formatting.IFormatter;
+import ru.format.formatting.deprecated.Formatter;
 import ru.format.io.FileReader;
 import ru.format.io.FileWriter;
 import ru.format.io.IReader;
@@ -18,7 +18,8 @@ public class Main {
 
     private static final String outputFile = "code_output.txt";
 
-    public static void main(String[] args) throws WriterException, ReaderException, CloseException {
+    public static void main(String[] args)
+            throws WriterException, ReaderException, CloseException, IllegalAccessException {
         if (args.length != 1) {
             throw new IllegalArgumentException("Pass the filename as parameter!");
         }
@@ -29,9 +30,7 @@ public class Main {
                 IWriter writer = new FileWriter(outputFile)
         ) {
             ILexer lexer = new LexerStateMachine(reader);
-                        formatter.format(lexer, writer);        // Each format() call starts the Formatter State Machine
+            formatter.format(lexer, writer);
         }
-        //        log.info("File formatted.");
-        //        log.info("Result can be found in " + outputFile);
     }
 }

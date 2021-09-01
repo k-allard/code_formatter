@@ -7,5 +7,5 @@ import ru.format.io.IWriter;
 import ru.format.lexer.ILexer;
 
 public interface IFormatter {
-    void format(ILexer lexer, IWriter writer) throws FormatterException, ReaderException, WriterException;
+    void format(ILexer lexer, IWriter writer) throws FormatterException, ReaderException, WriterException, IllegalAccessException;
 }

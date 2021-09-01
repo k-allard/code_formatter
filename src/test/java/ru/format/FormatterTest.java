@@ -3,9 +3,9 @@ package ru.format;
 import org.junit.jupiter.api.Test;
 import ru.format.exceptions.ReaderException;
 import ru.format.exceptions.WriterException;
-import ru.format.formatting.Formatter;
+import ru.format.formatting.deprecated.Formatter;
 import ru.format.lexer.ILexer;
-import ru.format.lexer.Lexer;
+import ru.format.lexer.deprecated.Lexer;
 import ru.format.io.StringReader;
 import ru.format.io.StringWriter;
 
@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class FormatterTest {
 
     @Test
-    void formatTest() throws WriterException, ReaderException {
+    void formatTest() throws WriterException, ReaderException, IllegalAccessException {
         var in = new StringReader("if (boo == null){ return 1;}\n" +
                 "else if (boo == 1)   {      return 2; }    \n" +
                 "   else \n" +
@@ -48,7 +48,7 @@ class FormatterTest {
     }
 
     @Test
-    void formatTest2() throws WriterException, ReaderException {
+    void formatTest2() throws WriterException, ReaderException, IllegalAccessException {
         var in = new StringReader("    function { if (blabla == null) { return 1;\n" +
                 "    } if\n" +
                 " (...) { if (...) {\n" +
@@ -73,7 +73,7 @@ class FormatterTest {
     }
 
     @Test
-    void formatTest3() throws WriterException, ReaderException {
+    void formatTest3() throws WriterException, ReaderException, IllegalAccessException {
         var in = new StringReader("public UserLoginResponse loginUser(UserLoginRequest request) throws BadRequestException\n" +
                 "{\n" +
                 "User user = userService.getUserByEmail(request.getEmail());\n" +
@@ -104,7 +104,7 @@ class FormatterTest {
     }
 
     @Test
-    void formatTest4() throws WriterException, ReaderException {
+    void formatTest4() throws WriterException, ReaderException, IllegalAccessException {
         var in = new StringReader("if (boo == null){ return 1;}\n" +
                 "else if \n" +
                 " (boo == 1)   {      return 2; }    \n" +

@@ -8,4 +8,6 @@ public interface IReader extends IClosable {
 
     char readChar() throws ReaderException;
 
+    void clearBuffer() throws IllegalAccessException;
+
 }

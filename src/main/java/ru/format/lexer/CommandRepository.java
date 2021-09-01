@@ -3,31 +3,36 @@ package ru.format.lexer;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
+import ru.format.lexer.commands.AppendPostpone;
+import ru.format.lexer.commands.Char;
+import ru.format.lexer.commands.CloseCurlyBracket;
+import ru.format.lexer.commands.NewLine;
+import ru.format.lexer.commands.OpenCurlyBracket;
+import ru.format.lexer.commands.Semicolon;
+import ru.format.lexer.commands.Space;
+import ru.format.lexer.commands.Spaces;
 
 @Slf4j
 public class CommandRepository {
 
-    private Map<Pair<State, Signal>, Command> commandMap;
-
-    private Signal signal;
-    private State state;
-    private Command command;
+    private final Map<Pair<LexerState, Character>, ICommand> commandMap;
 
     public CommandRepository() {
         commandMap = new HashMap<>();
-        commandMap.put(new ImmutablePair<>(State.INITIAL, null), new Command(CommandTypeEnum.CMD_APPEND_LEXEME));
-        commandMap.put(new ImmutablePair<>(State.SPACING, null), new Command(CommandTypeEnum.CMD_APPEND_POSTPONE));
-        commandMap.put(new ImmutablePair<>(State.INITIAL, new Signal(' ')), new Command(CommandTypeEnum.CMD_APPEND_LEXEME));
-        commandMap.put(new ImmutablePair<>(State.SPACING, new Signal(' ')), new Command(CommandTypeEnum.CMD_APPEND_LEXEME));
-
+        commandMap.put(Pair.create(LexerState.INITIAL, ' '), new Space());
+        commandMap.put(Pair.create(LexerState.INITIAL, ';'), new Semicolon());
+        commandMap.put(Pair.create(LexerState.INITIAL, '{'), new OpenCurlyBracket());
+        commandMap.put(Pair.create(LexerState.INITIAL, '}'), new CloseCurlyBracket());
+        commandMap.put(Pair.create(LexerState.INITIAL, '\n'), new NewLine());
+        commandMap.put(Pair.create(LexerState.INITIAL, null), new Char());
+        commandMap.put(Pair.create(LexerState.SPACING, ' '), new Spaces());
+        commandMap.put(Pair.create(LexerState.SPACING, null), new AppendPostpone());
     }
 
-    public Command getCommand(State state, Signal ch) {
-        if (ch.getCh() != ' ') {
-            ch = null;
-        }
-        return commandMap.getOrDefault(new ImmutablePair<>(state, ch), null);
+    public ICommand getCommand(LexerState state, Character ch) {
+        ICommand command = commandMap.get(Pair.create(state, ch));
+        return (command == null)
+                ? commandMap.get(Pair.create(state, null))
+                : command;
     }
 }

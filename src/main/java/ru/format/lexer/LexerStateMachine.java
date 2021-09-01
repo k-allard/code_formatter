@@ -1,6 +1,5 @@
 package ru.format.lexer;
 
-import java.util.HashMap;
 import lombok.extern.slf4j.Slf4j;
 import ru.format.exceptions.ReaderException;
 import ru.format.io.IReader;
@@ -16,8 +15,6 @@ public class LexerStateMachine implements ILexer, IContext {
     private TokenBuilder tokenBuilder;
     private final StringBuilder postponeString;
 
-    private final HashMap<Character, String> tokenNames;
-
     public LexerStateMachine(IReader reader) {
         log.debug("New Lexer State Machine created");
         this.reader = reader;
@@ -25,13 +22,6 @@ public class LexerStateMachine implements ILexer, IContext {
         stateTransitions = new StateTransitions();
         postponeString = new StringBuilder();
         postponeReader = new PostponeReader(postponeString);
-
-        tokenNames = new HashMap<>();
-        tokenNames.put('\n', "newline");
-        tokenNames.put(';', "semicolon");
-        tokenNames.put('{', "open");
-        tokenNames.put('}', "close");
-
     }
 
     @Override
@@ -40,35 +30,25 @@ public class LexerStateMachine implements ILexer, IContext {
     }
 
     @Override
-    public IToken nextToken() throws ReaderException {
+    public IToken nextToken() throws ReaderException, IllegalAccessException {
         tokenBuilder = new TokenBuilder();
-        State state = State.INITIAL;
-        while (postponeReader.hasChars() && state != State.TERMINATED) {
+        LexerState state = LexerState.INITIAL;
+        while (postponeReader.hasChars() && state != LexerState.TERMINATED) {
             state = step(state, postponeReader);
         }
-
-        while (reader.hasChars() && state != State.TERMINATED) {
+        postponeReader.clearBuffer();
+        while (reader.hasChars() && state != LexerState.TERMINATED) {
             state = step(state, reader);
         }
         return tokenBuilder.buildToken();
     }
 
-    private State step(State state, IReader reader) throws ReaderException {
+    private LexerState step(LexerState state, IReader reader) throws ReaderException {
         char ch = reader.readChar();
-        Command command = commandRepository.getCommand(state, new Signal(ch));
-        if (command == null) {
-            log.debug("FAIL: Command for state [{}] and ch [{}] not found", state, ch);
-        } else {
-            command.execute(new Signal(ch), this);
-            log.debug("SUCCESS: Command [{}] for state [{}] and ch [{}] executed", command.getCommandType(), state, ch);
-        }
-        State newState = stateTransitions.nextState(state, new Signal(ch));
-        log.debug("State transition: [{}] ---> [{}]", state, newState);
-        if (state == State.SPACING) {
-            setTokenName("space");
-        } else {
-            setTokenName(tokenNames.getOrDefault(ch, "char"));
-        }
+        ICommand command = commandRepository.getCommand(state, ch);
+        command.execute(ch, this);
+        LexerState newState = stateTransitions.nextState(state, ch);
+        // log.debug("Char read: [{}]. State transition: [{}] ---> [{}]", ch, state, newState);
         return newState;
     }
 

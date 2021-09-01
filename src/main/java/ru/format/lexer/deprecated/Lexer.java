@@ -1,7 +1,10 @@
-package ru.format.lexer;
+package ru.format.lexer.deprecated;
 
 import ru.format.exceptions.ReaderException;
 import ru.format.io.IReader;
+import ru.format.lexer.ILexer;
+import ru.format.lexer.IToken;
+import ru.format.lexer.Token;
 
 public class Lexer implements ILexer {
     private static final char   LEFT_CURLY_BRACKET = '{';

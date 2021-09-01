@@ -16,7 +16,7 @@ public class PostponeReader implements IReader {
     }
 
     @Override
-    public boolean hasChars() throws ReaderException {
+    public boolean hasChars() {
         return (position < inputString.length());
     }
 
@@ -28,6 +28,12 @@ public class PostponeReader implements IReader {
             log.error("StringReader.readChar() exception", e);
             throw new ReaderException("StringReader.readChar() exception");
         }
+    }
+
+    @Override
+    public void clearBuffer() {
+        inputString.setLength(0);
+        position = 0;
     }
 
     @Override
