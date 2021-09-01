@@ -1,4 +1,4 @@
-package ru.format.lexer;
+package ru.format;
 
 import java.util.Objects;
 

@@ -3,6 +3,7 @@ package ru.format.lexer;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
+import ru.format.Pair;
 import ru.format.lexer.commands.AppendPostpone;
 import ru.format.lexer.commands.Char;
 import ru.format.lexer.commands.CloseCurlyBracket;

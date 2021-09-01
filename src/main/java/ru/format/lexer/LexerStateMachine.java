@@ -52,6 +52,10 @@ public class LexerStateMachine implements ILexer, IContext {
         return newState;
     }
 
+    /*
+    // TODO: методы ниже вынести в класс Context (implements IContext)
+    */
+
     @Override
     public void appendLexeme(char ch) {
         tokenBuilder.appendLexeme(ch);

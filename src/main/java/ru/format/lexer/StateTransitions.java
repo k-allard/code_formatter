@@ -2,6 +2,7 @@ package ru.format.lexer;
 
 import java.util.HashMap;
 import java.util.Map;
+import ru.format.Pair;
 
 public class StateTransitions {
     private LexerState state;
