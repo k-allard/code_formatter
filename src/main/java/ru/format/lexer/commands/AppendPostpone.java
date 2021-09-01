@@ -9,4 +9,3 @@ public class AppendPostpone implements ICommand {
         context.appendPostpone(ch);
     }
 }
-
