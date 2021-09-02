@@ -6,4 +6,8 @@ public interface IContext {
     void setTokenName(String name);
 
     void appendPostpone(char ch);
+
+    void newTokenBuilder();
+
+    TokenBuilder getTokenBuilder();
 }
