@@ -9,6 +9,7 @@ public class Context implements IContext {
         this.postponeString = postponeString;
     }
 
+    @Override
     public void newTokenBuilder() {
         this.tokenBuilder = new TokenBuilder();
     }
@@ -18,6 +19,7 @@ public class Context implements IContext {
         tokenBuilder.appendLexeme(ch);
     }
 
+    @Override
     public TokenBuilder getTokenBuilder() {
         return tokenBuilder;
     }
