@@ -5,10 +5,11 @@ import ru.format.formatting.ICommand;
 import ru.format.formatting.IContext;
 import ru.format.lexer.IToken;
 
-public class OpenCurlyBracketWithoutSpace implements ICommand {
+public class OpenCurlyBracketWithPrecedingSpace implements ICommand {
 
     @Override
     public void execute(IToken token, IContext context) throws WriterException {
+        context.writeSpace();
         context.writeLexeme(token);
         context.writeNewLine();
         context.incrementIndent();
