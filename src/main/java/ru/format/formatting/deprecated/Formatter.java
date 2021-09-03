@@ -14,10 +14,10 @@ import ru.format.lexer.IToken;
 public class Formatter implements IFormatter {
 
     @Override
-    public void format(final ILexer lexer, final IWriter writer)
+    public void format(final ILexer lexer)
             throws FormatterException, WriterException, ReaderException, IllegalAccessException {
         while (lexer.hasMoreTokens()) {
-            IToken token = lexer.nextToken();       // Each readToken() call starts the Lexer State Machine
+            IToken token = lexer.nextToken();
             log.debug("NEW TOKEN [{}] - [{}]", token.getName(), token.getLexeme());
         }
     }

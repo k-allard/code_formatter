@@ -2,14 +2,15 @@ package ru.format.lexer;
 
 import org.junit.jupiter.api.Test;
 import ru.format.exceptions.ReaderException;
+import ru.format.io.IReader;
 import ru.format.io.StringReader;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class LexerStateMachineTest {
 
     @Test
-    public void test1() throws ReaderException, IllegalAccessException {
-        var in = new StringReader("     if ()\n{  r;}");
+    public void lexerTest1() throws ReaderException, IllegalAccessException {
+        IReader in = new StringReader("     if ()\n{  r;}");
         ILexer lexer = new LexerStateMachine(in);
         IToken token = lexer.nextToken();
         assertEquals("spaces", token.getName());

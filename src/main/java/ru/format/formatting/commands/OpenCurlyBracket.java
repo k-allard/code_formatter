@@ -9,6 +9,7 @@ public class OpenCurlyBracket implements ICommand {
 
     @Override
     public void execute(IToken token, IContext context) throws WriterException {
+        context.writeSpace();
         context.writeLexeme(token);
         context.writeNewLine();
         context.incrementIndent();

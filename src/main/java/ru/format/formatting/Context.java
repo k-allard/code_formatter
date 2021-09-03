@@ -45,4 +45,9 @@ public class Context implements IContext {
     public void decrementIndent() {
         indentLevel--;
     }
+
+    @Override
+    public void writeSpace() throws WriterException {
+        writer.writeChar(' ');
+    }
 }

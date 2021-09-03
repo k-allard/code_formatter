@@ -13,4 +13,6 @@ public interface IContext {
     void incrementIndent();
 
     void decrementIndent();
+
+    void writeSpace() throws WriterException;
 }

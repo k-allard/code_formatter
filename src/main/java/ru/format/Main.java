@@ -30,7 +30,7 @@ public class Main {
         ) {
             IFormatter formatter = new FormatterStateMachine(writer);
             ILexer lexer = new LexerStateMachine(reader);
-            formatter.format(lexer, writer);
+            formatter.format(lexer);
         }
     }
 }

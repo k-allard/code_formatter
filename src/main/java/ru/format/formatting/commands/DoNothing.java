@@ -5,10 +5,9 @@ import ru.format.formatting.ICommand;
 import ru.format.formatting.IContext;
 import ru.format.lexer.IToken;
 
-public class Char implements ICommand {
+public class DoNothing implements ICommand {
 
     @Override
     public void execute(IToken token, IContext context) throws WriterException {
-        context.writeLexeme(token);
     }
 }

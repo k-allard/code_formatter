@@ -23,13 +23,20 @@ public class FormatterStateMachine implements IFormatter {
     }
 
     @Override
-    public void format(ILexer lexer, IWriter writer) throws FormatterException, ReaderException, WriterException, IllegalAccessException {
-        FormatterState state = FormatterState.INITIAL;
-        while (lexer.hasMoreTokens() && state != FormatterState.TERMINATED) {
-            IToken token = lexer.nextToken();
-            ICommand command = commandRepository.getCommand(state, token);
-            command.execute(token, context);
-            state = stateTransitions.nextState(state, token);
+    public void format(ILexer lexer) throws FormatterException, ReaderException, WriterException, IllegalAccessException {
+        FormatterState state = null;
+        while (lexer.hasMoreTokens()) {
+            state = (state == FormatterState.TERMINATED)
+                    ? FormatterState.INITIAL
+                    : FormatterState.NEW_LINE_START;
+            while (state != FormatterState.TERMINATED) {
+                IToken token = lexer.nextToken();
+                ICommand command = commandRepository.getCommand(state, token);
+                log.debug("state: [{}], token name: [{}]", state, token.getName());
+                command.execute(token, context);
+                state = stateTransitions.nextState(state, token);
+                log.debug("new state: [{}]", state);
+            }
         }
     }
 }
