@@ -29,4 +29,21 @@ class FormatterStateMachineTest {
                 "    r;\n" +
                 "}", writer.toString());
     }
+
+    @Test
+    void formatterTest2() throws WriterException, ReaderException, IllegalAccessException {
+        IReader in = new StringReader("if () {abc}");
+        ILexer lexer = new LexerStateMachine(in);
+        IWriter writer = new StringWriter();
+        IFormatter formatter = new FormatterStateMachine(writer);
+        formatter.format(lexer);
+        System.out.print("[");
+        System.out.print(writer);
+        System.out.println("]");
+
+        assertEquals("if () {\n    abc\n}", writer.toString());
+    }
 }
+
+//[if ()  {
+//    abc}]

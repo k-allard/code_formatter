@@ -5,7 +5,7 @@ import ru.format.formatting.ICommand;
 import ru.format.formatting.IContext;
 import ru.format.lexer.IToken;
 
-public class CloseCurlyBracket implements ICommand {
+public class CloseCurlyBracketWithoutNewline implements ICommand {
 
     @Override
     public void execute(IToken token, IContext context) throws WriterException {
