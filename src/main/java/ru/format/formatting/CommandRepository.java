@@ -23,10 +23,11 @@ public class CommandRepository {
         commandMap.put(Pair.create(FormatterState.INITIAL, "spaces"), new Space());
         commandMap.put(Pair.create(FormatterState.INITIAL, "newline"), new DoNothing());
 
-        commandMap.put(Pair.create(FormatterState.NEW_LINE_START, "close"), new CloseCurlyBracketWithoutNewline());
+        commandMap.put(Pair.create(FormatterState.NEW_LINE_START, "close"), new CloseCurlyBracketWithoutPrecedingNewline());
         commandMap.put(Pair.create(FormatterState.NEW_LINE_START, "open"), new WriteIndentAndLexeme());
         commandMap.put(Pair.create(FormatterState.NEW_LINE_START, "space"), new DoNothing());
         commandMap.put(Pair.create(FormatterState.NEW_LINE_START, "spaces"), new DoNothing());
+        commandMap.put(Pair.create(FormatterState.NEW_LINE_START, "newline"), new DoNothing());
         commandMap.put(Pair.create(FormatterState.NEW_LINE_START, null), new WriteIndentAndLexeme());
 
         commandMap.put(Pair.create(FormatterState.SPACE_START, "char"), new WriteLexeme());

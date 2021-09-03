@@ -13,5 +13,6 @@ public class CloseCurlyBracketWithNewline implements ICommand {
         context.decrementIndent();
         context.writeIndent();
         context.writeLexeme(token);
+        context.writeNewLine();
     }
 }
