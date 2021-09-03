@@ -10,17 +10,14 @@ import ru.format.lexer.IToken;
 
 
 @Slf4j
-public class FormatterStateMachine implements IFormatter, IContext {
+public class FormatterStateMachine implements IFormatter {
 
     private final CommandRepository commandRepository;
     private final StateTransitions stateTransitions;
-    private static final int SPACES_FOR_LEVEL = 4;
-    private final IWriter writer;
-    private int indentLevel;
+    private final IContext context;
 
     public FormatterStateMachine(IWriter writer) {
-        this.writer = writer;
-        indentLevel = 0;
+        context = new Context(writer);
         commandRepository = new CommandRepository();
         stateTransitions = new StateTransitions();
     }
@@ -31,43 +28,8 @@ public class FormatterStateMachine implements IFormatter, IContext {
         while (lexer.hasMoreTokens() && state != FormatterState.TERMINATED) {
             IToken token = lexer.nextToken();
             ICommand command = commandRepository.getCommand(state, token);
-            command.execute(token, this);
+            command.execute(token, context);
             state = stateTransitions.nextState(state, token);
         }
-    }
-
-    /*
-    // TODO: все методы ниже вынести в класс Context (implements IContext)
-    */
-
-    private void writeString(String str) throws WriterException {
-        for (int i = 0; i < str.length(); i++) {
-            writer.writeChar(str.charAt(i));
-        }
-    }
-
-    @Override
-    public void writeLexeme(IToken token) throws WriterException {
-        writeString(token.getLexeme());
-    }
-
-    @Override
-    public void writeNewLine() throws WriterException {
-        writer.writeChar('\n');
-    }
-
-    @Override
-    public void writeIndent() throws WriterException {
-        writeString(" ".repeat(Math.max(0, indentLevel * SPACES_FOR_LEVEL)));
-    }
-
-    @Override
-    public void incrementIndent() {
-        indentLevel++;
-    }
-
-    @Override
-    public void decrementIndent() {
-        indentLevel--;
     }
 }
