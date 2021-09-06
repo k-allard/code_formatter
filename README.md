@@ -13,11 +13,9 @@ if (boo == null){ return 1;}
 else if 
  (boo == 1)   {      return 2; }    
    else 
-{ if (boo > 10) 
+{ for (boo = 0; boo > 10; boo += 8)
    {
-boo -= 1;    
-return boo;
- }  
+boo -= 1;         }
       return 4;
 } 
 </pre>
@@ -31,9 +29,8 @@ else if (boo == 1) {
     return 2;
 }
 else {
-    if (boo > 10) {
+    for (boo = 0; boo > 10; boo += 8) {
         boo -= 1;
-        return boo;
     }
     return 4;
 }
