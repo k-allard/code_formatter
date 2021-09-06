@@ -123,5 +123,29 @@ class FormatterStateMachineTest {
                 "    sout(i);\n" +
                 "}\n", writer.toString());
     }
+
+    @Test
+    void formatterTest6() throws WriterException, ReaderException, IllegalAccessException {
+        IReader in = new StringReader("   else \n" +
+                "{ for (b = 0; b > 10; b += 8)\n" +
+                "   {\n" +
+                "b -= 1;         }\n" +
+                "      ret 4;\n" +
+                "} ");
+        ILexer lexer = new LexerStateMachine(in);
+        IWriter writer = new StringWriter();
+        IFormatter formatter = new FormatterStateMachine(writer);
+        formatter.format(lexer);
+        System.out.print("[");
+        System.out.print(writer);
+        System.out.println("]");
+
+        assertEquals("else {\n" +
+                "    for (b = 0; b > 10; b += 8) {\n" +
+                "        b -= 1;\n" +
+                "    }\n" +
+                "    ret 4;\n" +
+                "}\n", writer.toString());
+    }
 }
 
