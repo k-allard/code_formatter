@@ -11,6 +11,9 @@ public class StateTransitions {
     public StateTransitions() {
         stateTransitionMap = new HashMap<>();
         stateTransitionMap.put(Pair.create(LexerState.INITIAL, ' '), LexerState.SPACING);
+        stateTransitionMap.put(Pair.create(LexerState.INITIAL, '\r'), LexerState.INITIAL);
+        stateTransitionMap.put(Pair.create(LexerState.SPACING, '\r'), LexerState.SPACING);
+
         stateTransitionMap.put(Pair.create(LexerState.SPACING, ' '), LexerState.SPACING);
         stateTransitionMap.put(Pair.create(LexerState.SPACING, null), LexerState.TERMINATED);
         stateTransitionMap.put(Pair.create(LexerState.INITIAL, null), LexerState.TERMINATED);

@@ -4,14 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import ru.format.Pair;
-import ru.format.lexer.commands.AppendPostpone;
-import ru.format.lexer.commands.Char;
-import ru.format.lexer.commands.CloseCurlyBracket;
-import ru.format.lexer.commands.NewLine;
-import ru.format.lexer.commands.OpenCurlyBracket;
-import ru.format.lexer.commands.Semicolon;
-import ru.format.lexer.commands.Space;
-import ru.format.lexer.commands.Spaces;
+import ru.format.lexer.commands.*;
 
 @Slf4j
 public class CommandRepository {
@@ -21,6 +14,8 @@ public class CommandRepository {
     public CommandRepository() {
         commandMap = new HashMap<>();
         commandMap.put(Pair.create(LexerState.INITIAL, ' '), new Space());
+        commandMap.put(Pair.create(LexerState.INITIAL, '\r'), new DoNothing());
+        commandMap.put(Pair.create(LexerState.SPACING, '\r'), new DoNothing());
         commandMap.put(Pair.create(LexerState.INITIAL, ';'), new Semicolon());
         commandMap.put(Pair.create(LexerState.INITIAL, '{'), new OpenCurlyBracket());
         commandMap.put(Pair.create(LexerState.INITIAL, '}'), new CloseCurlyBracket());
