@@ -33,7 +33,11 @@ public class Context implements IContext {
 
     @Override
     public void writeIndent() throws WriterException {
-        writeString(" ".repeat(Math.max(0, indentLevel * SPACES_FOR_LEVEL)));
+        StringBuilder indent = new StringBuilder();
+        for (int i = 0; i < indentLevel * SPACES_FOR_LEVEL; i++) {
+            indent.append(' ');
+        }
+        writeString(indent.toString());
     }
 
     @Override

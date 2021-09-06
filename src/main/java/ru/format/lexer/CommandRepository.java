@@ -14,6 +14,8 @@ public class CommandRepository {
     public CommandRepository() {
         commandMap = new HashMap<>();
         commandMap.put(Pair.create(LexerState.INITIAL, ' '), new Space());
+        commandMap.put(Pair.create(LexerState.INITIAL, '\r'), new DoNothing());
+        commandMap.put(Pair.create(LexerState.SPACING, '\r'), new DoNothing());
         commandMap.put(Pair.create(LexerState.INITIAL, ';'), new Semicolon());
         commandMap.put(Pair.create(LexerState.INITIAL, '{'), new OpenCurlyBracket());
         commandMap.put(Pair.create(LexerState.INITIAL, '}'), new CloseCurlyBracket());
