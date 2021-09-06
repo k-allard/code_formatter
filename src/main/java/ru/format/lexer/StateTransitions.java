@@ -18,11 +18,9 @@ public class StateTransitions {
         stateTransitionMap.put(Pair.create(LexerState.INITIAL, 'f'), LexerState.FOR1);
 
         stateTransitionMap.put(Pair.create(LexerState.FOR1, 'o'), LexerState.FOR2);
-        stateTransitionMap.put(Pair.create(LexerState.FOR1, ' '), LexerState.SPACING);
         stateTransitionMap.put(Pair.create(LexerState.FOR1, null), LexerState.TERMINATED);
 
         stateTransitionMap.put(Pair.create(LexerState.FOR2, 'r'), LexerState.FOR3);
-        stateTransitionMap.put(Pair.create(LexerState.FOR2, ' '), LexerState.SPACING);
         stateTransitionMap.put(Pair.create(LexerState.FOR2, null), LexerState.TERMINATED);
 
         stateTransitionMap.put(Pair.create(LexerState.FOR3, ' '), LexerState.FOR_START);

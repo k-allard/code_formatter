@@ -15,6 +15,7 @@ public class StateTransitions {
         stateTransitionMap.put(Pair.create(FormatterState.NEW_LINE_START, "space"), FormatterState.NEW_LINE_START);
         stateTransitionMap.put(Pair.create(FormatterState.NEW_LINE_START, "spaces"), FormatterState.NEW_LINE_START);
         stateTransitionMap.put(Pair.create(FormatterState.NEW_LINE_START, "newline"), FormatterState.NEW_LINE_START);
+        stateTransitionMap.put(Pair.create(FormatterState.NEW_LINE_START, "for"), FormatterState.TERMINATED);
         stateTransitionMap.put(Pair.create(FormatterState.NEW_LINE_START, null), FormatterState.TERMINATED);
 
         stateTransitionMap.put(Pair.create(FormatterState.INITIAL, "semicolon"), FormatterState.NEW_LINE_START);

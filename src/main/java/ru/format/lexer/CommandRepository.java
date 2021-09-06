@@ -28,13 +28,13 @@ public class CommandRepository {
         commandMap.put(Pair.create(LexerState.SPACING, 'f'), new AppendLexeme());
 
         commandMap.put(Pair.create(LexerState.FOR1, 'o'), new AppendLexeme());
-        commandMap.put(Pair.create(LexerState.FOR1, null), new AppendLexeme());
+        commandMap.put(Pair.create(LexerState.FOR1, null), new ForBreakage());
         commandMap.put(Pair.create(LexerState.FOR2, 'r'), new AppendLexeme());
-        commandMap.put(Pair.create(LexerState.FOR2, null), new AppendLexeme());
-        commandMap.put(Pair.create(LexerState.FOR3, null), new AppendLexeme());
+        commandMap.put(Pair.create(LexerState.FOR2, null), new ForBreakage());
+        commandMap.put(Pair.create(LexerState.FOR3, null), new ForBreakage());
         commandMap.put(Pair.create(LexerState.FOR3, ' '), new AppendLexeme());
         commandMap.put(Pair.create(LexerState.FOR3, '('), new AppendLexeme());
-        commandMap.put(Pair.create(LexerState.FOR_START, null), new AppendLexeme());
+        commandMap.put(Pair.create(LexerState.FOR_START, null), new ForReady());
 
     }
 

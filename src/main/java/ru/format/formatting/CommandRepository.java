@@ -28,6 +28,7 @@ public class CommandRepository {
         commandMap.put(Pair.create(FormatterState.NEW_LINE_START, "space"), new DoNothing());
         commandMap.put(Pair.create(FormatterState.NEW_LINE_START, "spaces"), new DoNothing());
         commandMap.put(Pair.create(FormatterState.NEW_LINE_START, "newline"), new DoNothing());
+        commandMap.put(Pair.create(FormatterState.NEW_LINE_START, "for"), new IndentAndLexeme());
         commandMap.put(Pair.create(FormatterState.NEW_LINE_START, null), new IndentAndLexeme());
 
         commandMap.put(Pair.create(FormatterState.SPACE_START, "char"), new WriteLexeme());

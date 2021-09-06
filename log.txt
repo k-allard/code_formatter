@@ -1,0 +1,60 @@
+LexerStateMachine     -               [INITIAL]->[ ]->[SPACING]
+LexerStateMachine     -               [SPACING]->[ ]->[SPACING]
+LexerStateMachine     -               [SPACING]->[ ]->[SPACING]
+LexerStateMachine     -               [SPACING]->[ ]->[SPACING]
+LexerStateMachine     -               [SPACING]->[ ]->[SPACING]
+LexerStateMachine     -               [SPACING]->[i]->[TERMINATED]
+
+FORMATTER             -               [NEW_LINE_START]->[spaces]-[     ]->[NEW_LINE_START]
+
+LexerStateMachine     - *reading postpone*
+LexerStateMachine     -               [INITIAL]->[i]->[TERMINATED]
+
+FORMATTER             -               [NEW_LINE_START]->[char]-[i]->[TERMINATED]
+
+LexerStateMachine     -               [INITIAL]->[f]->[FOR1]
+LexerStateMachine     -               [FOR1]->[ ]->[SPACING]
+LexerStateMachine     -               [SPACING]->[ ]->[SPACING]
+LexerStateMachine     -               [SPACING]->[(]->[TERMINATED]
+
+FORMATTER             -               [INITIAL]->[spaces]-[f ]->[SPACE_START]
+
+LexerStateMachine     - *reading postpone*
+LexerStateMachine     -               [INITIAL]->[ ]->[SPACING]
+LexerStateMachine     - *reading postpone*
+LexerStateMachine     -               [SPACING]->[(]->[TERMINATED]
+
+FORMATTER             -               [SPACE_START]->[space]-[ ]->[SPACE_START]
+
+LexerStateMachine     -               [INITIAL]->[)]->[TERMINATED]
+
+FORMATTER             -               [SPACE_START]->[char]-[)]->[TERMINATED]
+
+LexerStateMachine     -               [INITIAL]->[\n]->[TERMINATED]
+
+FORMATTER             -               [INITIAL]->[newline]-[\n]->[TERMINATED]
+
+LexerStateMachine     -               [INITIAL]->[{]->[TERMINATED]
+
+FORMATTER             -               [INITIAL]->[open]-[{]->[NEW_LINE_START]
+
+LexerStateMachine     -               [INITIAL]->[ ]->[SPACING]
+LexerStateMachine     -               [SPACING]->[ ]->[SPACING]
+LexerStateMachine     -               [SPACING]->[r]->[TERMINATED]
+
+FORMATTER             -               [NEW_LINE_START]->[spaces]-[  ]->[NEW_LINE_START]
+
+LexerStateMachine     - *reading postpone*
+LexerStateMachine     -               [INITIAL]->[r]->[TERMINATED]
+
+FORMATTER             -               [NEW_LINE_START]->[char]-[r]->[TERMINATED]
+
+LexerStateMachine     -               [INITIAL]->[;]->[TERMINATED]
+
+FORMATTER             -               [INITIAL]->[semicolon]-[;]->[NEW_LINE_START]
+
+LexerStateMachine     -               [INITIAL]->[}]->[TERMINATED]
+
+FORMATTER             -               [NEW_LINE_START]->[close]-[}]->[NEW_LINE_START]
+
+FORMATTER             -               [NEW_LINE_START]->[null]-[]->[TERMINATED]

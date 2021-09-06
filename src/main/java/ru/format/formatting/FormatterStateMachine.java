@@ -32,10 +32,11 @@ public class FormatterStateMachine implements IFormatter {
             while (state != FormatterState.TERMINATED) {
                 IToken token = lexer.nextToken();
                 ICommand command = commandRepository.getCommand(state, token);
-                log.debug("[{}] -> [{}]-[{}]", state, token.getName(), token.getLexeme());
                 command.execute(token, context);
-                state = stateTransitions.nextState(state, token);
-                log.debug("-> [{}]", state);
+                FormatterState newState = stateTransitions.nextState(state, token);
+                log.debug("     [{}]->[{}]-[{}]->[{}]", state, token.getName(), token.getLexeme(), newState);
+                log.debug("     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+                state = newState;
             }
         }
     }

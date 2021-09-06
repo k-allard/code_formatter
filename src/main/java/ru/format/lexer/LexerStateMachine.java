@@ -35,6 +35,7 @@ public class LexerStateMachine implements ILexer {
         context.newTokenBuilder();
         LexerState state = LexerState.INITIAL;
         while (postponeReader.hasChars() && state != LexerState.TERMINATED) {
+            log.debug("*reading postpone*");
             state = step(state, postponeReader);
         }
         postponeReader.clearBuffer();
@@ -49,7 +50,7 @@ public class LexerStateMachine implements ILexer {
         ICommand command = commandRepository.getCommand(state, ch);
         command.execute(ch, context);
         LexerState newState = stateTransitions.nextState(state, ch);
-        log.debug("[{}] [{}]->[{}]", ch, state, newState);
+        log.debug("              [{}]->[{}]->[{}]", state, ch, newState);
         return newState;
     }
 }

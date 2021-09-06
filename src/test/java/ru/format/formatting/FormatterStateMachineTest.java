@@ -16,7 +16,7 @@ class FormatterStateMachineTest {
 
     @Test
     void formatterTest1() throws WriterException, ReaderException, IllegalAccessException {
-        IReader in = new StringReader("     if ()\n{  r;}");
+        IReader in = new StringReader("     if  ()\n{  r;}");
         ILexer lexer = new LexerStateMachine(in);
         IWriter writer = new StringWriter();
         IFormatter formatter = new FormatterStateMachine(writer);
