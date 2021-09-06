@@ -4,14 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import ru.format.Pair;
-import ru.format.lexer.commands.AppendPostpone;
-import ru.format.lexer.commands.Char;
-import ru.format.lexer.commands.CloseCurlyBracket;
-import ru.format.lexer.commands.NewLine;
-import ru.format.lexer.commands.OpenCurlyBracket;
-import ru.format.lexer.commands.Semicolon;
-import ru.format.lexer.commands.Space;
-import ru.format.lexer.commands.Spaces;
+import ru.format.lexer.commands.*;
 
 @Slf4j
 public class CommandRepository {
@@ -26,8 +19,21 @@ public class CommandRepository {
         commandMap.put(Pair.create(LexerState.INITIAL, '}'), new CloseCurlyBracket());
         commandMap.put(Pair.create(LexerState.INITIAL, '\n'), new NewLine());
         commandMap.put(Pair.create(LexerState.INITIAL, null), new Char());
+        commandMap.put(Pair.create(LexerState.INITIAL, 'f'), new AppendLexeme());
+
         commandMap.put(Pair.create(LexerState.SPACING, ' '), new Spaces());
         commandMap.put(Pair.create(LexerState.SPACING, null), new AppendPostpone());
+        commandMap.put(Pair.create(LexerState.SPACING, 'f'), new AppendLexeme());
+
+        commandMap.put(Pair.create(LexerState.FOR1, 'o'), new AppendLexeme());
+        commandMap.put(Pair.create(LexerState.FOR1, null), new AppendLexeme());
+        commandMap.put(Pair.create(LexerState.FOR2, 'r'), new AppendLexeme());
+        commandMap.put(Pair.create(LexerState.FOR2, null), new AppendLexeme());
+        commandMap.put(Pair.create(LexerState.FOR3, null), new AppendLexeme());
+        commandMap.put(Pair.create(LexerState.FOR3, ' '), new AppendLexeme());
+        commandMap.put(Pair.create(LexerState.FOR3, '('), new AppendLexeme());
+        commandMap.put(Pair.create(LexerState.FOR_START, null), new AppendLexeme());
+
     }
 
     public ICommand getCommand(LexerState state, Character ch) {

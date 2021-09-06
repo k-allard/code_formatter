@@ -49,7 +49,7 @@ public class LexerStateMachine implements ILexer {
         ICommand command = commandRepository.getCommand(state, ch);
         command.execute(ch, context);
         LexerState newState = stateTransitions.nextState(state, ch);
-        // log.debug("Char read: [{}]. State transition: [{}] ---> [{}]", ch, state, newState);
+        log.debug("[{}] [{}]->[{}]", ch, state, newState);
         return newState;
     }
 }
