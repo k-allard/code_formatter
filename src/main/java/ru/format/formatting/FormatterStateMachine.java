@@ -8,6 +8,8 @@ import ru.format.io.IWriter;
 import ru.format.lexer.ILexer;
 import ru.format.lexer.IToken;
 
+import java.lang.reflect.InvocationTargetException;
+
 
 @Slf4j
 public class FormatterStateMachine implements IFormatter {
@@ -23,7 +25,7 @@ public class FormatterStateMachine implements IFormatter {
     }
 
     @Override
-    public void format(ILexer lexer) throws FormatterException, ReaderException, WriterException, IllegalAccessException {
+    public void format(ILexer lexer) throws FormatterException, ReaderException, WriterException, IllegalAccessException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException {
         FormatterState state = null;
         while (lexer.hasMoreTokens()) {
             state = (state == FormatterState.TERMINATED)

@@ -10,12 +10,15 @@ import ru.format.io.StringWriter;
 import ru.format.lexer.ILexer;
 import ru.format.lexer.LexerStateMachine;
 import ru.format.formatting.FormatterStateMachine;
+
+import java.lang.reflect.InvocationTargetException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FormatterStateMachineTest {
 
     @Test
-    void formatterTest1() throws WriterException, ReaderException, IllegalAccessException {
+    void formatterTest1() throws WriterException, ReaderException, IllegalAccessException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException {
         IReader in = new StringReader("     if  ()\n{  r;}");
         ILexer lexer = new LexerStateMachine(in);
         IWriter writer = new StringWriter();
@@ -31,7 +34,7 @@ class FormatterStateMachineTest {
     }
 
     @Test
-    void formatterTest2() throws WriterException, ReaderException, IllegalAccessException {
+    void formatterTest2() throws WriterException, ReaderException, IllegalAccessException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException {
         IReader in = new StringReader("if () {abc}");
         ILexer lexer = new LexerStateMachine(in);
         IWriter writer = new StringWriter();
@@ -45,7 +48,7 @@ class FormatterStateMachineTest {
     }
 
     @Test
-    void formatterTest3() throws WriterException, ReaderException, IllegalAccessException {
+    void formatterTest3() throws WriterException, ReaderException, IllegalAccessException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException {
         IReader in = new StringReader(
                 "else \n" +
                 "{ if (b) \n" +
@@ -71,7 +74,7 @@ class FormatterStateMachineTest {
     }
 
     @Test
-    void formatterTest4() throws WriterException, ReaderException, IllegalAccessException {
+    void formatterTest4() throws WriterException, ReaderException, IllegalAccessException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException {
         IReader in = new StringReader("if (boo == null){ return 1;}\n" +
                 "else if \n" +
                 " (boo == 1)   {      return 2; }    \n" +
@@ -107,7 +110,7 @@ class FormatterStateMachineTest {
     }
 
     @Test
-    void formatterTest5() throws WriterException, ReaderException, IllegalAccessException {
+    void formatterTest5() throws WriterException, ReaderException, IllegalAccessException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException {
         IReader in = new StringReader("for (i = 0; i < 5; i++) {\n" +
                 "  sout(i);\n" +
                 "}\n");
@@ -125,7 +128,7 @@ class FormatterStateMachineTest {
     }
 
     @Test
-    void formatterTest6() throws WriterException, ReaderException, IllegalAccessException {
+    void formatterTest6() throws WriterException, ReaderException, IllegalAccessException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException {
         IReader in = new StringReader("   else \n" +
                 "{ for (b = 0; b > 10; b += 8)\n" +
                 "   {\n" +

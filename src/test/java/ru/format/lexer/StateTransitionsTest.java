@@ -3,10 +3,13 @@ package ru.format.lexer;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 class StateTransitionsTest {
     @Test
-    void tes1() {
+    void print_PasrsedLexerStateTransitions_json() {
         StateTransitions stateTransitions = new StateTransitions();
 
         LexerState[] states = stateTransitions.getStates();
@@ -28,5 +31,16 @@ class StateTransitionsTest {
             }
             System.out.println("__________________________");
         }
+    }
+
+    @Test
+    void find_something_from_parsed_json() {
+        StateTransitions stateTransitions = new StateTransitions();
+
+        LexerState[] states = stateTransitions.getStates();
+        List<LexerState> statesList = Arrays.stream(states).collect(Collectors.toList());
+        LexerState stateThatIFound = statesList.get(statesList.indexOf(new LexerState("SPACING")));
+        Action actionThatIFound = stateThatIFound.getActions().get(stateThatIFound.getActions().indexOf(new Action("\r")));
+        System.out.println(actionThatIFound);
     }
 }

@@ -13,6 +13,8 @@ import ru.format.io.IWriter;
 import ru.format.lexer.ILexer;
 import ru.format.lexer.LexerStateMachine;
 
+import java.lang.reflect.InvocationTargetException;
+
 @Slf4j
 public class Main {
 
@@ -31,6 +33,14 @@ public class Main {
             IFormatter formatter = new FormatterStateMachine(writer);
             ILexer lexer = new LexerStateMachine(reader);
             formatter.format(lexer);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
         }
     }
 }

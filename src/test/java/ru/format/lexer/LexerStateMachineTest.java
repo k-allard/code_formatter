@@ -4,12 +4,15 @@ import org.junit.jupiter.api.Test;
 import ru.format.exceptions.ReaderException;
 import ru.format.io.IReader;
 import ru.format.io.StringReader;
+
+import java.lang.reflect.InvocationTargetException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class LexerStateMachineTest {
 
     @Test
-    public void lexerTest1() throws ReaderException, IllegalAccessException {
+    public void lexerTest1() throws ReaderException, IllegalAccessException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException {
         IReader in = new StringReader("     if ()\n{  r;}");
         ILexer lexer = new LexerStateMachine(in);
         IToken token = lexer.nextToken();
