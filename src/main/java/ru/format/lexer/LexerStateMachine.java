@@ -5,10 +5,11 @@ import ru.format.exceptions.ReaderException;
 import ru.format.io.IReader;
 import ru.format.io.PostponeReader;
 
+import java.io.IOException;
+
 @Slf4j
 public class LexerStateMachine implements ILexer {
 
-    private final CommandRepository commandRepository;
     private final StateTransitions stateTransitions;
     private final IReader reader;
     private final IReader postponeReader;
@@ -18,7 +19,6 @@ public class LexerStateMachine implements ILexer {
     public LexerStateMachine(IReader reader) {
         log.debug("New Lexer State Machine created");
         this.reader = reader;
-        commandRepository = new CommandRepository();
         stateTransitions = new StateTransitions();
         StringBuilder postponeString = new StringBuilder();
         postponeReader = new PostponeReader(postponeString);
@@ -33,23 +33,23 @@ public class LexerStateMachine implements ILexer {
     @Override
     public IToken nextToken() throws ReaderException, IllegalAccessException {
         context.newTokenBuilder();
-        LexerState state = LexerState.INITIAL;
-        while (postponeReader.hasChars() && state != LexerState.TERMINATED) {
+        String state = "INITIAL";
+        while (postponeReader.hasChars() && state.equals("TERMINATED")) {     //TODO
             log.debug("*reading postpone*");
             state = step(state, postponeReader);
         }
         postponeReader.clearBuffer();
-        while (reader.hasChars() && state != LexerState.TERMINATED) {
+        while (reader.hasChars() && state.equals("TERMINATED")) {        //TODO
             state = step(state, reader);
         }
         return context.getTokenBuilder().buildToken();
     }
 
-    private LexerState step(LexerState state, IReader reader) throws ReaderException {
+    private String step(String state, IReader reader) throws ReaderException {
         char ch = reader.readChar();
-        ICommand command = commandRepository.getCommand(state, ch);
+        ICommand command = null; //TODO
         command.execute(ch, context);
-        LexerState newState = stateTransitions.nextState(state, ch);
+        String newState = null; //TODO
         log.debug("              [{}]->[{}]->[{}]", state, ch, newState);
         return newState;
     }

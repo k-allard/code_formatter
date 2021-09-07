@@ -1,11 +1,24 @@
 package ru.format.lexer;
 
-public enum LexerState {
-    INITIAL,
-    SPACING,
-    FOR1,
-    FOR2,
-    FOR3,
-    FOR_START,
-    TERMINATED
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.ArrayList;
+
+@Getter
+@Setter
+public class LexerState {
+    String state;
+    ArrayList<Action> actions;
+
+    @Override
+    public String toString() {
+        return "LexerState: "
+                + state
+//                + "  >>>>>"
+//                + actions
+//                + "<<<<<  "
+                + "\n----------------\n"
+                ;
+    }
 }

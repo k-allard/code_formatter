@@ -1,43 +1,58 @@
 package ru.format.lexer;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.google.gson.*;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import ru.format.Pair;
 
+@Slf4j
+@Getter
 public class StateTransitions {
-    private LexerState state;
-    private final Map<Pair<LexerState, Character>, LexerState> stateTransitionMap;
+    LexerState[] states;
+
+    //    private final Map<Pair<LexerState, Character>, LexerState> stateTransitionMap;
 
     public StateTransitions() {
-        stateTransitionMap = new HashMap<>();
-//        stateTransitionMap.put(Pair.create(LexerState.INITIAL, ' '), LexerState.SPACING);
-//        stateTransitionMap.put(Pair.create(LexerState.INITIAL, '\r'), LexerState.INITIAL);
-//        stateTransitionMap.put(Pair.create(LexerState.INITIAL, 'f'), LexerState.FOR1);
-//        stateTransitionMap.put(Pair.create(LexerState.INITIAL, null), LexerState.TERMINATED);
+//        Gson gson = new Gson();
+//        try (InputStream file = StateTransitions.class.
+//                getResourceAsStream("/LexerStateTransitions.json")) {
+//            assert file != null;
+//            JsonArray states = gson.fromJson(
+//                    new InputStreamReader(file), JsonArray.class);
+//            for (JsonElement state : states) {
+//                JsonObject stateObject = state.getAsJsonObject();
+//                String stateName = stateObject.get("state").getAsString();
+//                JsonArray actions = stateObject.getAsJsonArray("actions");
+//                for (JsonElement action : actions) {
+//                    // ...
+//                }
+//            }
+//        }
 
-//        stateTransitionMap.put(Pair.create(LexerState.FOR1, 'o'), LexerState.FOR2);
-//        stateTransitionMap.put(Pair.create(LexerState.FOR1, null), LexerState.TERMINATED);
+        Gson gson = new GsonBuilder().create();
+        try (InputStream file = StateTransitions.class.getResourceAsStream("/LexerStateTransitions.json")) {
+            assert file != null;            // TODO check if i need this assert
+            states = gson.fromJson(new InputStreamReader(file), LexerState[].class);
+        } catch (IOException e) {
+            log.debug("Error with file LexerStateTransitions.json");
+            throw new IllegalArgumentException();
+        }
 
-//        stateTransitionMap.put(Pair.create(LexerState.FOR2, 'r'), LexerState.FOR3);
-//        stateTransitionMap.put(Pair.create(LexerState.FOR2, null), LexerState.TERMINATED);
+//        stateTransitionMap = new HashMap<>();
 
-//        stateTransitionMap.put(Pair.create(LexerState.FOR3, ' '), LexerState.FOR_START);
-//        stateTransitionMap.put(Pair.create(LexerState.FOR3, '('), LexerState.FOR_START);
-//        stateTransitionMap.put(Pair.create(LexerState.FOR3, null), LexerState.TERMINATED);
-
-//        stateTransitionMap.put(Pair.create(LexerState.FOR_START, ')'), LexerState.TERMINATED);
-//        stateTransitionMap.put(Pair.create(LexerState.FOR_START, null), LexerState.FOR_START);
-
-//        stateTransitionMap.put(Pair.create(LexerState.SPACING, ' '), LexerState.SPACING);
-//        stateTransitionMap.put(Pair.create(LexerState.SPACING, '\r'), LexerState.SPACING);
-//        stateTransitionMap.put(Pair.create(LexerState.SPACING, 'f'), LexerState.FOR1);
-//        stateTransitionMap.put(Pair.create(LexerState.SPACING, null), LexerState.TERMINATED);
     }
 
-    LexerState nextState(LexerState state, Character ch) {
-        LexerState newState = stateTransitionMap.get(Pair.create(state, ch));
-        return (newState == null)
-                ? stateTransitionMap.get(Pair.create(state, null))
-                : newState;
-    }
+//    String nextState(Character ch) {
+//        LexerState newState = stateTransitionMap.get(Pair.create(state, ch));
+//        return (newState == null)
+//                ? stateTransitionMap.get(Pair.create(state, null))
+//                : newState;
+//    }
+
 }
