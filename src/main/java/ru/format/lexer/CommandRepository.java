@@ -13,29 +13,31 @@ public class CommandRepository {
 
     public CommandRepository() {
         commandMap = new HashMap<>();
-        commandMap.put(Pair.create(LexerState.INITIAL, ' '), new Space());
-        commandMap.put(Pair.create(LexerState.INITIAL, '\r'), new DoNothing());
-        commandMap.put(Pair.create(LexerState.SPACING, '\r'), new DoNothing());
-        commandMap.put(Pair.create(LexerState.INITIAL, ';'), new Semicolon());
-        commandMap.put(Pair.create(LexerState.INITIAL, '{'), new OpenCurlyBracket());
-        commandMap.put(Pair.create(LexerState.INITIAL, '}'), new CloseCurlyBracket());
-        commandMap.put(Pair.create(LexerState.INITIAL, '\n'), new NewLine());
-        commandMap.put(Pair.create(LexerState.INITIAL, null), new Char());
-        commandMap.put(Pair.create(LexerState.INITIAL, 'f'), new AppendLexeme());
+//        commandMap.put(Pair.create(LexerState.INITIAL, ' '), new Space());
+//        commandMap.put(Pair.create(LexerState.INITIAL, '\r'), new DoNothing());
+//        commandMap.put(Pair.create(LexerState.INITIAL, ';'), new Semicolon());
+//        commandMap.put(Pair.create(LexerState.INITIAL, '{'), new OpenCurlyBracket());
+//        commandMap.put(Pair.create(LexerState.INITIAL, '}'), new CloseCurlyBracket());
+//        commandMap.put(Pair.create(LexerState.INITIAL, '\n'), new NewLine());
+//        commandMap.put(Pair.create(LexerState.INITIAL, null), new Char());
+//        commandMap.put(Pair.create(LexerState.INITIAL, 'f'), new AppendLexeme());
 
-        commandMap.put(Pair.create(LexerState.SPACING, ' '), new Spaces());
-        commandMap.put(Pair.create(LexerState.SPACING, null), new AppendPostpone());
-        commandMap.put(Pair.create(LexerState.SPACING, 'f'), new AppendLexeme());
+//        commandMap.put(Pair.create(LexerState.SPACING, ' '), new Spaces());
+//        commandMap.put(Pair.create(LexerState.SPACING, null), new AppendPostpone());
+//        commandMap.put(Pair.create(LexerState.SPACING, 'f'), new AppendLexeme());
+//        commandMap.put(Pair.create(LexerState.SPACING, '\r'), new DoNothing());
 
-        commandMap.put(Pair.create(LexerState.FOR1, 'o'), new AppendLexeme());
-        commandMap.put(Pair.create(LexerState.FOR1, null), new ForBreakage());
-        commandMap.put(Pair.create(LexerState.FOR2, 'r'), new AppendLexeme());
-        commandMap.put(Pair.create(LexerState.FOR2, null), new ForBreakage());
-        commandMap.put(Pair.create(LexerState.FOR3, null), new ForBreakage());
-        commandMap.put(Pair.create(LexerState.FOR3, ' '), new AppendLexeme());
-        commandMap.put(Pair.create(LexerState.FOR3, '('), new AppendLexeme());
-        commandMap.put(Pair.create(LexerState.FOR_START, null), new ForReady());
+//        commandMap.put(Pair.create(LexerState.FOR1, 'o'), new AppendLexeme());
+//        commandMap.put(Pair.create(LexerState.FOR1, null), new ForBreakage());
 
+//        commandMap.put(Pair.create(LexerState.FOR2, 'r'), new AppendLexeme());
+//        commandMap.put(Pair.create(LexerState.FOR2, null), new ForBreakage());
+
+//        commandMap.put(Pair.create(LexerState.FOR3, null), new ForBreakage());
+//        commandMap.put(Pair.create(LexerState.FOR3, ' '), new AppendLexeme());
+//        commandMap.put(Pair.create(LexerState.FOR3, '('), new AppendLexeme());
+
+//        commandMap.put(Pair.create(LexerState.FOR_START, null), new ForReady());
     }
 
     public ICommand getCommand(LexerState state, Character ch) {

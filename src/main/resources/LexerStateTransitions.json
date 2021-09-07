@@ -1,0 +1,137 @@
+[
+  {
+    "state": "INITIAL",
+    "actions": [
+      {
+        "input": null,
+        "command": "Char",
+        "state": "TERMINATED"
+      },
+      {
+        "input": " ",
+        "command": "Space",
+        "state": "SPACING"
+      },
+      {
+        "input": "\r",
+        "command": "DoNothing",
+        "state": "INITIAL"
+      },
+      {
+        "input": ";",
+        "command": "Semicolon",
+        "state": "TERMINATED"
+      },
+      {
+        "input": "{",
+        "command": "OpenCurlyBracket",
+        "state": "TERMINATED"
+      },
+      {
+        "input": "}",
+        "command": "CloseCurlyBracket",
+        "state": "TERMINATED"
+      },
+      {
+        "input": "\n",
+        "command": "NewLine",
+        "state": "TERMINATED"
+      },
+      {
+        "input": "f",
+        "command": "AppendLexeme",
+        "state": "FOR1"
+      }
+    ]
+  },
+  {
+    "state": "SPACING",
+    "actions": [
+      {
+        "input": null,
+        "command": "AppendPostpone",
+        "state": "TERMINATED"
+      },
+      {
+        "input": " ",
+        "command": "Spaces",
+        "state": "SPACING"
+      },
+      {
+        "input": "\r",
+        "command": "DoNothing",
+        "state": "SPACING"
+      },
+      {
+        "input": "f",
+        "command": "AppendLexeme",
+        "state": "FOR1"
+      }
+    ]
+  },
+  {
+    "state": "FOR1",
+    "actions": [
+      {
+        "input": null,
+        "command": "ForBreakage",
+        "state": "TERMINATED"
+      },
+      {
+        "input": "o",
+        "command": "AppendLexeme",
+        "state": "FOR2"
+      }
+    ]
+  },
+  {
+    "state": "FOR2",
+    "actions": [
+      {
+        "input": null,
+        "command": "ForBreakage",
+        "state": "TERMINATED"
+      },
+      {
+        "input": "r",
+        "command": "AppendLexeme",
+        "state": "FOR3"
+      }
+    ]
+  },
+  {
+    "state": "FOR3",
+    "actions": [
+      {
+        "input": null,
+        "command": "ForBreakage",
+        "state": "TERMINATED"
+      },
+      {
+        "input": " ",
+        "command": "AppendLexeme",
+        "state": "FOR_START"
+      },
+      {
+        "input": "(",
+        "command": "AppendLexeme",
+        "state": "FOR_START"
+      }
+    ]
+  },
+  {
+    "state": "FOR_START",
+    "actions": [
+      {
+        "input": null,
+        "command": "ForReady",
+        "state": "FOR_START"
+      },
+      {
+        "input": ")",
+        "command": "ForReady",
+        "state": "TERMINATED"
+      }
+    ]
+  }
+]
