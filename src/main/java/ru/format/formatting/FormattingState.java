@@ -1,4 +1,4 @@
-package ru.format.lexer;
+package ru.format.formatting;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,17 +8,17 @@ import java.util.Objects;
 
 @Getter
 @Setter
-public class LexerState {
+public class FormattingState {
     String state;
-    ArrayList<LexerAction> actions;
+    ArrayList<FormattingAction> actions;
 
-    public LexerState(String state) {
+    public FormattingState(String state) {
         this.state = state;
     }
 
     @Override
     public String toString() {
-        return "LexerState: "
+        return "FormattingState: "
                 + state
                 + " >>>"
                 + actions
@@ -31,7 +31,7 @@ public class LexerState {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        LexerState state1 = (LexerState) o;
+        FormattingState state1 = (FormattingState) o;
         return state.equals(state1.state);
     }
 

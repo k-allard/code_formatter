@@ -15,8 +15,8 @@ class StateTransitionsTest {
         LexerState[] states = stateTransitions.getStates();
         for (LexerState state : states) {
             System.out.println("State " + state.getState() + ":");
-            ArrayList<Action> actions = state.getActions();
-            for (Action action : actions) {
+            ArrayList<LexerAction> actions = state.getActions();
+            for (LexerAction action : actions) {
                 System.out.print("      [");
                 if (action.input != null && action.input.equals("\n")) {
                     System.out.print("\\n");
@@ -40,7 +40,7 @@ class StateTransitionsTest {
         LexerState[] states = stateTransitions.getStates();
         List<LexerState> statesList = Arrays.stream(states).collect(Collectors.toList());
         LexerState stateThatIFound = statesList.get(statesList.indexOf(new LexerState("SPACING")));
-        Action actionThatIFound = stateThatIFound.getActions().get(stateThatIFound.getActions().indexOf(new Action("\r")));
+        LexerAction actionThatIFound = stateThatIFound.getActions().get(stateThatIFound.getActions().indexOf(new LexerAction("\r")));
         System.out.println(actionThatIFound);
     }
 }

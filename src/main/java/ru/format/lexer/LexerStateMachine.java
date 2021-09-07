@@ -55,12 +55,12 @@ public class LexerStateMachine implements ILexer {
         return (ICommand) Class.forName(fullName).getDeclaredConstructor().newInstance();
     }
 
-    private Action findActionByStateAndInput(String state, String input) {
+    private LexerAction findActionByStateAndInput(String state, String input) {
         List<LexerState> statesList = Arrays.stream(states).collect(Collectors.toList());
         LexerState currentState = statesList.get(statesList.indexOf(new LexerState(state)));
-        int indexOfAction = currentState.getActions().indexOf(new Action(input));
+        int indexOfAction = currentState.getActions().indexOf(new LexerAction(input));
         if (indexOfAction == -1) {
-            indexOfAction = currentState.getActions().indexOf(new Action(null));
+            indexOfAction = currentState.getActions().indexOf(new LexerAction(null));
         }
         return currentState.getActions().get(indexOfAction);
     }

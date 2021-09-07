@@ -1,43 +1,27 @@
 package ru.format.formatting;
 
-import java.util.HashMap;
-import java.util.Map;
-import ru.format.Pair;
-import ru.format.lexer.IToken;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
+@Getter
 public class StateTransitions {
-    private FormatterState state;
-    private final Map<Pair<FormatterState, String>, FormatterState> stateTransitionMap;
+
+    private final FormattingState[] states;
 
     public StateTransitions() {
-        stateTransitionMap = new HashMap<>();
-        stateTransitionMap.put(Pair.create(FormatterState.NEW_LINE_START, "close"), FormatterState.NEW_LINE_START);
-        stateTransitionMap.put(Pair.create(FormatterState.NEW_LINE_START, "space"), FormatterState.NEW_LINE_START);
-        stateTransitionMap.put(Pair.create(FormatterState.NEW_LINE_START, "spaces"), FormatterState.NEW_LINE_START);
-        stateTransitionMap.put(Pair.create(FormatterState.NEW_LINE_START, "newline"), FormatterState.NEW_LINE_START);
-        stateTransitionMap.put(Pair.create(FormatterState.NEW_LINE_START, "for"), FormatterState.TERMINATED);
-        stateTransitionMap.put(Pair.create(FormatterState.NEW_LINE_START, null), FormatterState.TERMINATED);
-
-        stateTransitionMap.put(Pair.create(FormatterState.INITIAL, "semicolon"), FormatterState.NEW_LINE_START);
-        stateTransitionMap.put(Pair.create(FormatterState.INITIAL, "newline"), FormatterState.TERMINATED);
-        stateTransitionMap.put(Pair.create(FormatterState.INITIAL, "open"), FormatterState.NEW_LINE_START);
-        stateTransitionMap.put(Pair.create(FormatterState.INITIAL, "char"), FormatterState.TERMINATED);
-        stateTransitionMap.put(Pair.create(FormatterState.INITIAL, "close"), FormatterState.NEW_LINE_START);
-        stateTransitionMap.put(Pair.create(FormatterState.INITIAL, "space"), FormatterState.SPACE_START);
-        stateTransitionMap.put(Pair.create(FormatterState.INITIAL, "spaces"), FormatterState.SPACE_START);
-
-        stateTransitionMap.put(Pair.create(FormatterState.SPACE_START, "open"), FormatterState.NEW_LINE_START);
-        stateTransitionMap.put(Pair.create(FormatterState.SPACE_START, "newline"), FormatterState.SPACE_START);
-        stateTransitionMap.put(Pair.create(FormatterState.SPACE_START, "space"), FormatterState.SPACE_START);
-        stateTransitionMap.put(Pair.create(FormatterState.SPACE_START, "spaces"), FormatterState.SPACE_START);
-        stateTransitionMap.put(Pair.create(FormatterState.SPACE_START, null), FormatterState.TERMINATED);
-
-    }
-
-    FormatterState nextState(FormatterState state, IToken token) {
-        FormatterState newState = stateTransitionMap.get(Pair.create(state, token.getName()));
-        return (newState == null)
-                ? stateTransitionMap.get(Pair.create(state, null))
-                : newState;
+        Gson gson = new GsonBuilder().create();
+        try (InputStream file = ru.format.lexer.StateTransitions.class.getResourceAsStream("/FormatterStateTransitions.json")) {
+            assert file != null;                                                   // TODO check if i need this assert
+            states = gson.fromJson(new InputStreamReader(file), FormattingState[].class);
+        } catch (IOException e) {
+            log.debug("Error with file FormatterStateTransitions.json");
+            throw new IllegalArgumentException();
+        }
     }
 }

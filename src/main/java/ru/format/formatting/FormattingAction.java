@@ -1,14 +1,15 @@
-package ru.format.lexer;
+package ru.format.formatting;
 
 import lombok.Getter;
 import lombok.Setter;
+import ru.format.lexer.IToken;
 
 import java.util.Objects;
 
 @Getter
 @Setter
-public class Action {
-    public Action(String input) {
+public class FormattingAction {
+    public FormattingAction(String input) {
         this.input = input;
     }
 
@@ -31,7 +32,7 @@ public class Action {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Action action = (Action) o;
+        FormattingAction action = (FormattingAction) o;
         return Objects.equals(input, action.input);
     }
 
