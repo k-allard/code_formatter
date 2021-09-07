@@ -20,9 +20,9 @@ public class LexerState {
     public String toString() {
         return "LexerState: "
                 + state
-//                + "  >>>>>"
-//                + actions
-//                + "<<<<<  "
+                + " >>>"
+                + actions
+                + "<<< "
                 + "\n----------------\n"
                 ;
     }

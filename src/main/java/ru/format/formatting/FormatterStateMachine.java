@@ -7,7 +7,6 @@ import ru.format.exceptions.WriterException;
 import ru.format.io.IWriter;
 import ru.format.lexer.ILexer;
 import ru.format.lexer.IToken;
-
 import java.lang.reflect.InvocationTargetException;
 
 

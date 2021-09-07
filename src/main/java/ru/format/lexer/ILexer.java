@@ -7,5 +7,6 @@ import java.lang.reflect.InvocationTargetException;
 public interface ILexer {
     boolean hasMoreTokens() throws ReaderException;
 
-    IToken nextToken() throws ReaderException, IllegalAccessException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException;
+    IToken nextToken() throws ReaderException, IllegalAccessException, ClassNotFoundException,
+            InvocationTargetException, NoSuchMethodException, InstantiationException;
 }
