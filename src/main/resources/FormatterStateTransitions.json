@@ -1,0 +1,127 @@
+[
+  {
+    "state": "INITIAL",
+    "actions": [
+      {
+        "input": "open",
+        "command": "OpenCurlyBracketWithPrecedingSpace",
+        "state": "NEW_LINE_START"
+      },
+      {
+        "input": "char",
+        "command": "WriteLexeme",
+        "state": "TERMINATED"
+      },
+      {
+        "input": "close",
+        "command": "CloseCurlyBracketWithPrecedingNewline",
+        "state": "NEW_LINE_START"
+      },
+      {
+        "input": "semicolon",
+        "command": "Semicolon",
+        "state": "NEW_LINE_START"
+      },
+      {
+        "input": "space",
+        "command": "Space",
+        "state": "SPACE_START"
+      },
+      {
+        "input": "spaces",
+        "command": "Space",
+        "state": "SPACE_START"
+      },
+      {
+        "input": "newline",
+        "command": "DoNothing",
+        "state": "TERMINATED"
+      }
+    ]
+  },
+  {
+    "state": "NEW_LINE_START",
+    "actions": [
+      {
+        "input": "close",
+        "command": "CloseCurlyBracketWithoutPrecedingNewline",
+        "state": "NEW_LINE_START"
+      },
+      {
+        "input": "open",
+        "command": "IndentAndLexeme",
+        "state": "TERMINATED"
+      },
+      {
+        "input": "space",
+        "command": "DoNothing",
+        "state": "NEW_LINE_START"
+      },
+      {
+        "input": "spaces",
+        "command": "DoNothing",
+        "state": "NEW_LINE_START"
+      },
+      {
+        "input": "newline",
+        "command": "DoNothing",
+        "state": "NEW_LINE_START"
+      },
+      {
+        "input": "for",
+        "command": "IndentAndLexeme",
+        "state": "TERMINATED"
+      },
+      {
+        "input": null,
+        "command": "IndentAndLexeme",
+        "state": "TERMINATED"
+      }
+    ]
+  },
+  {
+    "state": "SPACE_START",
+    "actions": [
+      {
+        "input": "open",
+        "command": "OpenCurlyBracketWithoutPrecedingSpace",
+        "state": "NEW_LINE_START"
+      },
+      {
+        "input": "newline",
+        "command": "DoNothing",
+        "state": "SPACE_START"
+      },
+      {
+        "input": "space",
+        "command": "DoNothing",
+        "state": "SPACE_START"
+      },
+      {
+        "input": "spaces",
+        "command": "DoNothing",
+        "state": "SPACE_START"
+      },
+      {
+        "input": "char",
+        "command": "WriteLexeme",
+        "state": "TERMINATED"
+      },
+      {
+        "input": "close",
+        "command": "CloseCurlyBracketWithPrecedingNewline",
+        "state": "TERMINATED"
+      },
+      {
+        "input": "semicolon",
+        "command": "Semicolon",
+        "state": "TERMINATED"
+      },
+      {
+        "input": null,
+        "command": "DoNothing",
+        "state": "TERMINATED"
+      }
+    ]
+  }
+]
