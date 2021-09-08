@@ -1,13 +1,13 @@
 package ru.format.lexer;
 
-import lombok.extern.slf4j.Slf4j;
-import ru.format.exceptions.ReaderException;
-import ru.format.io.IReader;
-import ru.format.io.PostponeReader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
+import ru.format.exceptions.ReaderException;
+import ru.format.io.IReader;
+import ru.format.io.PostponeReader;
 
 @Slf4j
 public class LexerStateMachine implements ILexer {

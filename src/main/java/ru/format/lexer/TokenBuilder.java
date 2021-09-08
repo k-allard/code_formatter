@@ -3,7 +3,7 @@ package ru.format.lexer;
 public class TokenBuilder {
 
     private String name;
-    private StringBuilder lexeme;
+    private final StringBuilder lexeme;
 
     public TokenBuilder() {
         lexeme = new StringBuilder();

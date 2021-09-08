@@ -1,9 +1,8 @@
 package ru.format.lexer;
 
+import java.util.Objects;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -29,8 +28,12 @@ public class LexerAction {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         LexerAction action = (LexerAction) o;
         return Objects.equals(input, action.input);
     }

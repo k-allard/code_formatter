@@ -1,5 +1,6 @@
 package ru.format;
 
+import java.lang.reflect.InvocationTargetException;
 import lombok.extern.slf4j.Slf4j;
 import ru.format.exceptions.CloseException;
 import ru.format.exceptions.ReaderException;
@@ -12,8 +13,6 @@ import ru.format.io.IReader;
 import ru.format.io.IWriter;
 import ru.format.lexer.ILexer;
 import ru.format.lexer.LexerStateMachine;
-
-import java.lang.reflect.InvocationTargetException;
 
 @Slf4j
 public class Main {
@@ -33,14 +32,9 @@ public class Main {
             IFormatter formatter = new FormatterStateMachine(writer);
             ILexer lexer = new LexerStateMachine(reader);
             formatter.format(lexer);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
+        } catch (ClassNotFoundException | InstantiationException
+                | InvocationTargetException | NoSuchMethodException e) {
+            log.debug("Reflection error: Error while instantiate a class via its String name", e);
         }
     }
 }

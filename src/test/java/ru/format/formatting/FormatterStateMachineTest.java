@@ -9,7 +9,6 @@ import ru.format.io.StringReader;
 import ru.format.io.StringWriter;
 import ru.format.lexer.ILexer;
 import ru.format.lexer.LexerStateMachine;
-import ru.format.formatting.FormatterStateMachine;
 
 import java.lang.reflect.InvocationTargetException;
 
