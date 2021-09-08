@@ -64,8 +64,8 @@
       },
       {
         "input": "f",
-        "command": "AppendLexeme",
-        "state": "FOR1"
+        "command": "AppendPostpone",
+        "state": "TERMINATED"
       }
     ]
   },
