@@ -7,13 +7,16 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 import ru.format.Action;
 import ru.format.State;
+import ru.format.StateTransitions;
 
 class StateTransitionsTest {
+    private static final String JSON_FOR_LEXER = "/LexerStateTransitions.json";
+
     @Test
     void print_ParsedLexerStateTransitions_json() {
-        StateTransitions stateTransitions = new StateTransitions();
+        StateTransitions stateTransitions = new StateTransitions(JSON_FOR_LEXER);
 
-        State[] states = stateTransitions.getStates();
+        State[] states = stateTransitions.getStateTransitions();
         for (State state : states) {
             System.out.println("State " + state.getState() + ":");
             ArrayList<Action> actions = state.getActions();
@@ -36,9 +39,9 @@ class StateTransitionsTest {
 
     @Test
     void find_something_from_parsed_json() {
-        StateTransitions stateTransitions = new StateTransitions();
+        StateTransitions stateTransitions = new StateTransitions(JSON_FOR_LEXER);
 
-        State[] states = stateTransitions.getStates();
+        State[] states = stateTransitions.getStateTransitions();
         List<State> statesList = Arrays.stream(states).collect(Collectors.toList());
         State stateThatIFound = statesList.get(statesList.indexOf(new State("SPACING")));
         Action actionThatIFound = stateThatIFound.getActions().get(stateThatIFound.getActions().indexOf(new Action("\r")));

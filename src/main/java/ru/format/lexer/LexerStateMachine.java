@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import ru.format.Action;
 import ru.format.State;
+import ru.format.StateTransitions;
 import ru.format.exceptions.ReaderException;
 import ru.format.io.IReader;
 import ru.format.io.PostponeReader;
@@ -19,12 +20,13 @@ public class LexerStateMachine implements ILexer {
     private final IReader postponeReader;
     private final IContext context;
     private static final String COMMAND_PACKAGE = "ru.format.lexer.commands";
+    private static final String JSON_FOR_LEXER = "/LexerStateTransitions.json";
 
     public LexerStateMachine(IReader reader) {
         log.debug("New Lexer State Machine created");
         this.reader = reader;
-        StateTransitions stateTransitions = new StateTransitions();
-        states = stateTransitions.getStates();
+        StateTransitions stateTransitions = new StateTransitions(JSON_FOR_LEXER);
+        states = stateTransitions.getStateTransitions();
         StringBuilder postponeString = new StringBuilder();
         postponeReader = new PostponeReader(postponeString);
         context = new Context(postponeString);
