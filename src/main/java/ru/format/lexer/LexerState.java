@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.Objects;
 import lombok.Getter;
 import lombok.Setter;
+import ru.format.Action;
 
 @Getter
 @Setter
 public class LexerState {
     String state;
-    ArrayList<LexerAction> actions;
+    ArrayList<Action> actions;
 
     public LexerState(String state) {
         this.state = state;

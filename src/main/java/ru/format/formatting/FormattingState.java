@@ -2,7 +2,7 @@ package ru.format.formatting;
 
 import lombok.Getter;
 import lombok.Setter;
-
+import ru.format.Action;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -10,7 +10,7 @@ import java.util.Objects;
 @Setter
 public class FormattingState {
     String state;
-    ArrayList<FormattingAction> actions;
+    ArrayList<Action> actions;
 
     public FormattingState(String state) {
         this.state = state;
@@ -29,8 +29,12 @@ public class FormattingState {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         FormattingState state1 = (FormattingState) o;
         return state.equals(state1.state);
     }

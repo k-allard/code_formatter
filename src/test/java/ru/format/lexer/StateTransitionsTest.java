@@ -1,6 +1,7 @@
 package ru.format.lexer;
 
 import org.junit.jupiter.api.Test;
+import ru.format.Action;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,25 +10,25 @@ import java.util.stream.Collectors;
 
 class StateTransitionsTest {
     @Test
-    void print_PasrsedLexerStateTransitions_json() {
+    void print_ParsedLexerStateTransitions_json() {
         StateTransitions stateTransitions = new StateTransitions();
 
         LexerState[] states = stateTransitions.getStates();
         for (LexerState state : states) {
             System.out.println("State " + state.getState() + ":");
-            ArrayList<LexerAction> actions = state.getActions();
-            for (LexerAction action : actions) {
+            ArrayList<Action> actions = state.getActions();
+            for (Action action : actions) {
                 System.out.print("      [");
-                if (action.input != null && action.input.equals("\n")) {
+                if (action.getInput() != null && action.getInput().equals("\n")) {
                     System.out.print("\\n");
                 }
-                else if (action.input != null && action.input.equals("\r")) {
+                else if (action.getInput() != null && action.getInput().equals("\r")) {
                     System.out.print("\\r");
                 }
                 else {
-                    System.out.print(action.input);
+                    System.out.print(action.getInput());
                 }
-                System.out.print("]-[" + action.command + "]-[" + action.state + "]\n");
+                System.out.print("]-[" + action.getCommand() + "]-[" + action.getState() + "]\n");
             }
             System.out.println("__________________________");
         }
@@ -40,7 +41,7 @@ class StateTransitionsTest {
         LexerState[] states = stateTransitions.getStates();
         List<LexerState> statesList = Arrays.stream(states).collect(Collectors.toList());
         LexerState stateThatIFound = statesList.get(statesList.indexOf(new LexerState("SPACING")));
-        LexerAction actionThatIFound = stateThatIFound.getActions().get(stateThatIFound.getActions().indexOf(new LexerAction("\r")));
+        Action actionThatIFound = stateThatIFound.getActions().get(stateThatIFound.getActions().indexOf(new Action("\r")));
         System.out.println(actionThatIFound);
     }
 }

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
+import ru.format.Action;
 import ru.format.exceptions.ReaderException;
 import ru.format.io.IReader;
 import ru.format.io.PostponeReader;
@@ -55,12 +56,12 @@ public class LexerStateMachine implements ILexer {
         return (ICommand) Class.forName(fullName).getDeclaredConstructor().newInstance();
     }
 
-    private LexerAction findActionByStateAndInput(String state, String input) {
+    private Action findActionByStateAndInput(String state, String input) {
         List<LexerState> statesList = Arrays.stream(states).collect(Collectors.toList());
         LexerState currentState = statesList.get(statesList.indexOf(new LexerState(state)));
-        int indexOfAction = currentState.getActions().indexOf(new LexerAction(input));
+        int indexOfAction = currentState.getActions().indexOf(new Action(input));
         if (indexOfAction == -1) {
-            indexOfAction = currentState.getActions().indexOf(new LexerAction(null));
+            indexOfAction = currentState.getActions().indexOf(new Action(null));
         }
         return currentState.getActions().get(indexOfAction);
     }

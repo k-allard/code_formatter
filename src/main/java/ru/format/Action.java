@@ -1,21 +1,20 @@
-package ru.format.formatting;
-
-import lombok.Getter;
-import lombok.Setter;
-import ru.format.lexer.IToken;
+package ru.format;
 
 import java.util.Objects;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
-public class FormattingAction {
-    public FormattingAction(String input) {
-        this.input = input;
-    }
+public class Action {
 
     String input;
     String command;
     String state;
+
+    public Action(String input) {
+        this.input = input;
+    }
 
     @Override
     public String toString() {
@@ -30,9 +29,13 @@ public class FormattingAction {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FormattingAction action = (FormattingAction) o;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Action action = (Action) o;
         return Objects.equals(input, action.input);
     }
 

@@ -1,18 +1,17 @@
 package ru.format.formatting;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
-import ru.format.lexer.LexerState;
+import ru.format.Action;
 import ru.format.exceptions.FormatterException;
 import ru.format.exceptions.ReaderException;
 import ru.format.exceptions.WriterException;
 import ru.format.io.IWriter;
 import ru.format.lexer.ILexer;
 import ru.format.lexer.IToken;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
 
 @Slf4j
 public class FormatterStateMachine implements IFormatter {
@@ -34,12 +33,12 @@ public class FormatterStateMachine implements IFormatter {
         return (ICommand) Class.forName(fullName).getDeclaredConstructor().newInstance();
     }
 
-    private FormattingAction findActionByStateAndInput(String state, IToken token) {
+    private Action findActionByStateAndInput(String state, IToken token) {
         List<FormattingState> statesList = Arrays.stream(states).collect(Collectors.toList());
         FormattingState currentState = statesList.get(statesList.indexOf(new FormattingState(state)));
-        int indexOfAction = currentState.getActions().indexOf(new FormattingAction(token.getName()));
+        int indexOfAction = currentState.getActions().indexOf(new Action(token.getName()));
         if (indexOfAction == -1) {
-            indexOfAction = currentState.getActions().indexOf(new FormattingAction(null));
+            indexOfAction = currentState.getActions().indexOf(new Action(null));
         }
         return currentState.getActions().get(indexOfAction);
     }
@@ -53,7 +52,9 @@ public class FormatterStateMachine implements IFormatter {
     }
 
     @Override
-    public void format(ILexer lexer) throws FormatterException, ReaderException, WriterException, IllegalAccessException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException {
+    public void format(ILexer lexer) throws FormatterException, ReaderException,
+            WriterException, IllegalAccessException, ClassNotFoundException,
+            InvocationTargetException, NoSuchMethodException, InstantiationException {
         String state = null;
         while (lexer.hasMoreTokens()) {
             state = (state != null && state.equals("TERMINATED"))
