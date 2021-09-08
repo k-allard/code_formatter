@@ -1,4 +1,4 @@
-package ru.format;
+package ru.format.statetransitions;
 
 import java.util.ArrayList;
 import java.util.Objects;

@@ -2,7 +2,7 @@ package ru.format.lexer;
 
 import java.lang.reflect.InvocationTargetException;
 import lombok.extern.slf4j.Slf4j;
-import ru.format.StateTransitions;
+import ru.format.statetransitions.StateTransitions;
 import ru.format.exceptions.ReaderException;
 import ru.format.io.IReader;
 import ru.format.io.PostponeReader;

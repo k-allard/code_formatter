@@ -3,9 +3,9 @@ package ru.format.lexer;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import ru.format.Action;
-import ru.format.State;
-import ru.format.StateTransitions;
+import ru.format.statetransitions.Action;
+import ru.format.statetransitions.State;
+import ru.format.statetransitions.StateTransitions;
 
 class StateTransitionsTest {
     private static final String JSON_FOR_LEXER = "/LexerStateTransitions.json";
