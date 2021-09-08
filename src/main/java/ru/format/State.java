@@ -1,24 +1,23 @@
-package ru.format.lexer;
+package ru.format;
 
 import java.util.ArrayList;
 import java.util.Objects;
 import lombok.Getter;
 import lombok.Setter;
-import ru.format.Action;
 
 @Getter
 @Setter
-public class LexerState {
+public class State {
     String state;
     ArrayList<Action> actions;
 
-    public LexerState(String state) {
+    public State(String state) {
         this.state = state;
     }
 
     @Override
     public String toString() {
-        return "LexerState: "
+        return "State: "
                 + state
                 + " >>>"
                 + actions
@@ -35,7 +34,7 @@ public class LexerState {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        LexerState state1 = (LexerState) o;
+        State state1 = (State) o;
         return state.equals(state1.state);
     }
 

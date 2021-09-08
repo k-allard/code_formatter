@@ -6,12 +6,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import ru.format.State;
 
 @Slf4j
 @Getter
 public class StateTransitions {
 
-    private final FormattingState[] states;
+    private final State[] states;
     private static final String JSON_FOR_FORMATTER = "/FormatterStateTransitions.json";
 
     public StateTransitions() {
@@ -21,6 +22,6 @@ public class StateTransitions {
             log.error("Error opening resource " + JSON_FOR_FORMATTER);
         }
         assert file != null;
-        states = gson.fromJson(new InputStreamReader(file), FormattingState[].class);
+        states = gson.fromJson(new InputStreamReader(file), State[].class);
     }
 }

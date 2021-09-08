@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import ru.format.Action;
+import ru.format.State;
 import ru.format.exceptions.FormatterException;
 import ru.format.exceptions.ReaderException;
 import ru.format.exceptions.WriterException;
@@ -16,7 +17,7 @@ import ru.format.lexer.IToken;
 @Slf4j
 public class FormatterStateMachine implements IFormatter {
 
-    private final FormattingState[] states;
+    private final State[] states;
     private final IContext context;
     private static final String COMMAND_PACKAGE = "ru.format.formatting.commands";
 
@@ -34,8 +35,8 @@ public class FormatterStateMachine implements IFormatter {
     }
 
     private Action findActionByStateAndInput(String state, IToken token) {
-        List<FormattingState> statesList = Arrays.stream(states).collect(Collectors.toList());
-        FormattingState currentState = statesList.get(statesList.indexOf(new FormattingState(state)));
+        List<State> statesList = Arrays.stream(states).collect(Collectors.toList());
+        State currentState = statesList.get(statesList.indexOf(new State(state)));
         int indexOfAction = currentState.getActions().indexOf(new Action(token.getName()));
         if (indexOfAction == -1) {
             indexOfAction = currentState.getActions().indexOf(new Action(null));
