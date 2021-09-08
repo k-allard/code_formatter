@@ -1,10 +1,7 @@
 package ru.format.formatting;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import ru.format.Action;
-import ru.format.State;
 import ru.format.StateTransitions;
 import ru.format.exceptions.FormatterException;
 import ru.format.exceptions.ReaderException;
@@ -16,39 +13,21 @@ import ru.format.lexer.IToken;
 @Slf4j
 public class FormatterStateMachine implements IFormatter {
 
-    private final List<State> states;
     private final IContext context;
+    private final StateTransitions stateTransitions;
     private static final String COMMAND_PACKAGE = "ru.format.formatting.commands";
     private static final String JSON_FOR_FORMATTER = "/FormatterStateTransitions.json";
 
     public FormatterStateMachine(IWriter writer) {
         log.debug("New Formatter State Machine created");
         context = new Context(writer);
-        StateTransitions stateTransitions = new StateTransitions(JSON_FOR_FORMATTER);
-        states = stateTransitions.getStateTransitions();
+        stateTransitions = new StateTransitions(JSON_FOR_FORMATTER);
     }
 
     private ICommand createCommand(final String className) throws ClassNotFoundException, NoSuchMethodException,
             InvocationTargetException, InstantiationException, IllegalAccessException {
         String fullName = COMMAND_PACKAGE + "." + className;
         return (ICommand) Class.forName(fullName).getDeclaredConstructor().newInstance();
-    }
-
-    private Action findActionByStateAndInput(String state, IToken token) {
-        State currentState = states.get(states.indexOf(new State(state)));
-        int indexOfAction = currentState.getActions().indexOf(new Action(token.getName()));
-        if (indexOfAction == -1) {
-            indexOfAction = currentState.getActions().indexOf(new Action(null));
-        }
-        return currentState.getActions().get(indexOfAction);
-    }
-
-    private String findCommandByStateAndInput(String state, IToken token) {
-        return findActionByStateAndInput(state, token).getCommand();
-    }
-
-    private String findNewStateByStateAndInput(String state, IToken token) {
-        return findActionByStateAndInput(state, token).getState();
     }
 
     @Override
@@ -62,9 +41,9 @@ public class FormatterStateMachine implements IFormatter {
                     : "NEW_LINE_START";
             while (!state.equals("TERMINATED")) {
                 IToken token = lexer.nextToken();
-                ICommand command = createCommand(findCommandByStateAndInput(state, token));
+                ICommand command = createCommand(stateTransitions.findCommandByStateAndInput(state, token.getName()));
                 command.execute(token, context);
-                String newState = findNewStateByStateAndInput(state, token);
+                String newState = stateTransitions.findNewStateByStateAndInput(state, token.getName());
                 log.debug("     [{}]->[{}]-[{}]->[{}]", state, token.getName(), token.getLexeme(), newState);
                 log.debug("     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
                 state = newState;

@@ -1,10 +1,7 @@
 package ru.format.lexer;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import ru.format.Action;
-import ru.format.State;
 import ru.format.StateTransitions;
 import ru.format.exceptions.ReaderException;
 import ru.format.io.IReader;
@@ -13,18 +10,17 @@ import ru.format.io.PostponeReader;
 @Slf4j
 public class LexerStateMachine implements ILexer {
 
-    private final List<State> states;
     private final IReader reader;
     private final IReader postponeReader;
     private final IContext context;
+    private final StateTransitions stateTransitions;
     private static final String COMMAND_PACKAGE = "ru.format.lexer.commands";
     private static final String JSON_FOR_LEXER = "/LexerStateTransitions.json";
 
     public LexerStateMachine(IReader reader) {
         log.debug("New Lexer State Machine created");
         this.reader = reader;
-        StateTransitions stateTransitions = new StateTransitions(JSON_FOR_LEXER);
-        states = stateTransitions.getStateTransitions();
+        stateTransitions = new StateTransitions(JSON_FOR_LEXER);
         StringBuilder postponeString = new StringBuilder();
         postponeReader = new PostponeReader(postponeString);
         context = new Context(postponeString);
@@ -57,29 +53,12 @@ public class LexerStateMachine implements ILexer {
         return (ICommand) Class.forName(fullName).getDeclaredConstructor().newInstance();
     }
 
-    private Action findActionByStateAndInput(String state, String input) {
-        State currentState = states.get(states.indexOf(new State(state)));
-        int indexOfAction = currentState.getActions().indexOf(new Action(input));
-        if (indexOfAction == -1) {
-            indexOfAction = currentState.getActions().indexOf(new Action(null));
-        }
-        return currentState.getActions().get(indexOfAction);
-    }
-
-    private String findCommandByStateAndInput(String state, String input) {
-        return findActionByStateAndInput(state, input).getCommand();
-    }
-
-    private String findNewStateByStateAndInput(String state, String input) {
-        return findActionByStateAndInput(state, input).getState();
-    }
-
     private String step(String state, IReader reader) throws ReaderException, ClassNotFoundException,
             InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         char ch = reader.readChar();
-        ICommand command = createCommand(findCommandByStateAndInput(state, "" + ch));
+        ICommand command = createCommand(stateTransitions.findCommandByStateAndInput(state, "" + ch));
         command.execute(ch, context);
-        String newState = findNewStateByStateAndInput(state, "" + ch);
+        String newState = stateTransitions.findNewStateByStateAndInput(state, "" + ch);
         log.debug("              [{}]->[{}]->[{}]", state, ch, newState);
         return newState;
     }

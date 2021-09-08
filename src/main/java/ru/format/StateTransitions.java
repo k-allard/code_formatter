@@ -28,4 +28,21 @@ public class StateTransitions {
         stateTransitions = Arrays.stream(stateTransitionsArray)
                 .collect(Collectors.toList());
     }
+
+    private Action findActionByStateAndInput(String state, String input) {
+        State currentState = stateTransitions.get(stateTransitions.indexOf(new State(state)));
+        int indexOfAction = currentState.getActions().indexOf(new Action(input));
+        if (indexOfAction == -1) {
+            indexOfAction = currentState.getActions().indexOf(new Action(null));
+        }
+        return currentState.getActions().get(indexOfAction);
+    }
+
+    public String findCommandByStateAndInput(String state, String input) {
+        return findActionByStateAndInput(state, input).getCommand();
+    }
+
+    public String findNewStateByStateAndInput(String state, String input) {
+        return findActionByStateAndInput(state, input).getState();
+    }
 }
