@@ -9,9 +9,7 @@ import ru.format.io.StringReader;
 import ru.format.io.StringWriter;
 import ru.format.lexer.ILexer;
 import ru.format.lexer.LexerStateMachine;
-
 import java.lang.reflect.InvocationTargetException;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FormatterStateMachineTest {
