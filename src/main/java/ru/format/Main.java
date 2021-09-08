@@ -34,7 +34,7 @@ public class Main {
             formatter.format(lexer);
         } catch (ClassNotFoundException | InstantiationException
                 | InvocationTargetException | NoSuchMethodException e) {
-            log.debug("Reflection error: Error while instantiate a class via its String name", e);
+            log.error("Reflection error: Error while instantiate a class via its String name", e);
         }
     }
 }
