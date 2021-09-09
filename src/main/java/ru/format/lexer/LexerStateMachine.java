@@ -2,10 +2,11 @@ package ru.format.lexer;
 
 import java.lang.reflect.InvocationTargetException;
 import lombok.extern.slf4j.Slf4j;
-import ru.format.statetransitions.StateTransitions;
 import ru.format.exceptions.ReaderException;
+import ru.format.exceptions.ReflectionException;
 import ru.format.io.IReader;
 import ru.format.io.PostponeReader;
+import ru.format.statetransitions.StateTransitions;
 
 @Slf4j
 public class LexerStateMachine implements ILexer {
@@ -32,8 +33,7 @@ public class LexerStateMachine implements ILexer {
     }
 
     @Override
-    public IToken nextToken() throws ReaderException, IllegalAccessException, ClassNotFoundException,
-            InvocationTargetException, NoSuchMethodException, InstantiationException {
+    public IToken nextToken() throws ReaderException, IllegalAccessException {
         context.newTokenBuilder();
         String state = "INITIAL";
         while (postponeReader.hasChars() && !state.equals("TERMINATED")) {
@@ -47,14 +47,20 @@ public class LexerStateMachine implements ILexer {
         return context.getTokenBuilder().buildToken();
     }
 
-    private ICommand createCommand(final String className) throws ClassNotFoundException, NoSuchMethodException,
-            InvocationTargetException, InstantiationException, IllegalAccessException {
+    private ICommand createCommand(final String className) {
         String fullName = COMMAND_PACKAGE + "." + className;
-        return (ICommand) Class.forName(fullName).getDeclaredConstructor().newInstance();
+        try {
+            return (ICommand) Class.forName(fullName).getDeclaredConstructor().newInstance();
+        } catch (ClassNotFoundException | NoSuchMethodException
+                | InvocationTargetException | InstantiationException
+                | IllegalAccessException e) {
+            log.error("Reflection error. Error while instantiate a class via its String name: " + fullName, e);
+            throw new ReflectionException("Error while instantiate a class via its String name: " + fullName);
+        }
+
     }
 
-    private String step(String state, IReader reader) throws ReaderException, ClassNotFoundException,
-            InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    private String step(String state, IReader reader) throws ReaderException {
         char ch = reader.readChar();
         ICommand command = createCommand(stateTransitions.findCommandByStateAndInput(state, "" + ch));
         command.execute(ch, context);

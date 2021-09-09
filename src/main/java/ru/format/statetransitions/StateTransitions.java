@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import ru.format.exceptions.IncorrectFileException;
 
 @Slf4j
 @Getter
@@ -21,8 +22,8 @@ public class StateTransitions implements IStateTransitions {
         InputStream file = StateTransitions.class.getResourceAsStream(jsonInResources);
         if (file == null) {
             log.error("Error opening resource " + jsonInResources);
+            throw new IncorrectFileException("Error opening resource " + jsonInResources);
         }
-        assert file != null;
         State[] stateTransitionsArray = gson.fromJson(
                 new InputStreamReader(file), State[].class);
         stateTransitions = Arrays.stream(stateTransitionsArray)

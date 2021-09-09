@@ -32,9 +32,6 @@ public class Main {
             IFormatter formatter = new FormatterStateMachine(writer);
             ILexer lexer = new LexerStateMachine(reader);
             formatter.format(lexer);
-        } catch (ClassNotFoundException | InstantiationException
-                | InvocationTargetException | NoSuchMethodException e) {
-            log.error("Reflection error: Error while instantiate a class via its String name", e);
         }
     }
 }

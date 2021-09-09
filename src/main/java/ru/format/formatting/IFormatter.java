@@ -7,7 +7,5 @@ import ru.format.exceptions.WriterException;
 import ru.format.lexer.ILexer;
 
 public interface IFormatter {
-    void format(ILexer lexer) throws FormatterException, ReaderException, WriterException,
-            IllegalAccessException, ClassNotFoundException, InvocationTargetException,
-            NoSuchMethodException, InstantiationException;
+    void format(ILexer lexer) throws FormatterException, ReaderException, WriterException, IllegalAccessException;
 }
