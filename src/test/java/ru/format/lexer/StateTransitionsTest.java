@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import ru.format.statetransitions.Action;
-import ru.format.statetransitions.State;
+import ru.format.statetransitions.StateDTO;
 import ru.format.statetransitions.StateTransitions;
 
 class StateTransitionsTest {
@@ -14,8 +14,8 @@ class StateTransitionsTest {
     void print_ParsedLexerStateTransitions_json() {
         StateTransitions stateTransitions = new StateTransitions(JSON_FOR_LEXER);
 
-        List<State> states = stateTransitions.getStateTransitions();
-        for (State state : states) {
+        List<StateDTO> states = stateTransitions.getStateTransitions();
+        for (StateDTO state : states) {
             System.out.println("State " + state.getState() + ":");
             ArrayList<Action> actions = state.getActions();
             for (Action action : actions) {
@@ -39,8 +39,8 @@ class StateTransitionsTest {
     void find_something_from_parsed_json() {
         StateTransitions stateTransitions = new StateTransitions(JSON_FOR_LEXER);
 
-        List<State> statesList = stateTransitions.getStateTransitions();
-        State stateThatIFound = statesList.get(statesList.indexOf(new State("SPACING")));
+        List<StateDTO> statesList = stateTransitions.getStateTransitions();
+        StateDTO stateThatIFound = statesList.get(statesList.indexOf(new StateDTO("SPACING")));
         Action actionThatIFound = stateThatIFound.getActions().get(stateThatIFound.getActions().indexOf(new Action("\r")));
         System.out.println(actionThatIFound);
     }

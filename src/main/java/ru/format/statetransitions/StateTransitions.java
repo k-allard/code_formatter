@@ -6,16 +6,20 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import ru.format.Pair;
 import ru.format.exceptions.IncorrectFileException;
 
 @Slf4j
 @Getter
 public class StateTransitions implements IStateTransitions {
 
-    private final List<State> stateTransitions;
+    private final Map<Pair<String, Character>, String> stateTransitions = null;
+    private final Map<Pair<String, Character>, String> commands = null;
+
 
     public StateTransitions(String jsonInResources) {
         Gson gson = new GsonBuilder().create();
@@ -24,28 +28,34 @@ public class StateTransitions implements IStateTransitions {
             log.error("Error opening resource " + jsonInResources);
             throw new IncorrectFileException("Error opening resource " + jsonInResources);
         }
-        State[] stateTransitionsArray = gson.fromJson(
-                new InputStreamReader(file), State[].class);
-        stateTransitions = Arrays.stream(stateTransitionsArray)
-                .collect(Collectors.toList());
-    }
+        StateDTO[] stateTransitionsArray = gson.fromJson(
+                new InputStreamReader(file), StateDTO[].class);
 
-    private Action findActionByStateAndInput(String state, String input) {
-        State currentState = stateTransitions.get(stateTransitions.indexOf(new State(state)));
-        int indexOfAction = currentState.getActions().indexOf(new Action(input));
-        if (indexOfAction == -1) {
-            indexOfAction = currentState.getActions().indexOf(new Action(null));
+        for (StateDTO state : stateTransitionsArray) {
+            String currentState = state.getState();
+            for (Action action : state.getActions()) {
+                stateTransitions.put(new Pair<>(currentState, action.input), action.getState());
+                commands.put(new Pair<>(currentState, action.input), action.getCommand());
+            }
         }
-        return currentState.getActions().get(indexOfAction);
     }
 
-    @Override
-    public String findCommandByStateAndInput(String state, String input) {
-        return findActionByStateAndInput(state, input).getCommand();
-    }
-
-    @Override
-    public String findNewStateByStateAndInput(String state, String input) {
-        return findActionByStateAndInput(state, input).getState();
-    }
+//    private Action findActionByStateAndInput(String state, String input) {
+//        StateDTO currentState = stateTransitions.get(stateTransitions.indexOf(new StateDTO(state)));
+//        int indexOfAction = currentState.getActions().indexOf(new Action(input));
+//        if (indexOfAction == -1) {
+//            indexOfAction = currentState.getActions().indexOf(new Action(null));
+//        }
+//        return currentState.getActions().get(indexOfAction);
+//    }
+//
+//    @Override
+//    public String findCommandByStateAndInput(String state, String input) {
+//        return findActionByStateAndInput(state, input).getCommand();
+//    }
+//
+//    @Override
+//    public String findNewStateByStateAndInput(String state, String input) {
+//        return findActionByStateAndInput(state, input).getState();
+//    }
 }

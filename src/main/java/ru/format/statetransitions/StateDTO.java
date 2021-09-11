@@ -7,11 +7,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class State {
+public class StateDTO {
     String state;
     ArrayList<Action> actions;
 
-    public State(String state) {
+    public StateDTO(String state) {
         this.state = state;
     }
 
@@ -34,7 +34,7 @@ public class State {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        State state1 = (State) o;
+        StateDTO state1 = (StateDTO) o;
         return state.equals(state1.state);
     }
 
