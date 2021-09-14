@@ -36,3 +36,14 @@ else {
 }
 
 </pre>
+
+### What was used:
+
+- state machine pattern
+- SOLID principles
+- Lombok
+- Maven
+- Gson
+- Slf4j
+- JUnit5
+- Checkstyle
